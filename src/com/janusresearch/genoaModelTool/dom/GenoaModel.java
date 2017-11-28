@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.xml.DomManager;
 
@@ -18,6 +19,7 @@ public class GenoaModel {
     private final GenoaRoot genoaRoot;
     private final String fileName;
     private final String filePath;
+    private final XmlTag genoaRootTag;
 
     public GenoaModel(Project project, VirtualFile file) {
         myFile = file;
@@ -32,12 +34,42 @@ public class GenoaModel {
 
         //Get the GenoaRoot File Element
         genoaRoot = manager.getFileElement(xmlFile, GenoaRoot.class).getRootElement();
+        genoaRootTag = genoaRoot.getXmlTag();
+
         myTree = createTree();
 
     }
 
     private JTree createTree() {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(genoaRoot.getXmlTag().findFirstSubTag("name").getValue());
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode();
+        DefaultMutableTreeNode subNode_1 = new DefaultMutableTreeNode();
+        DefaultMutableTreeNode subNode_2 = new DefaultMutableTreeNode();
+        DefaultMutableTreeNode subNode_3 = new DefaultMutableTreeNode();
+        DefaultMutableTreeNode subNode_4 = new DefaultMutableTreeNode();
+
+        XmlTag[] tag = genoaRootTag.findSubTags("entity");
+        for (XmlTag t : tag) {
+            for (XmlTag s1 : t.findSubTags("attr")) {
+
+            }
+        }
+
+        for (XmlTag x : genoaRootTag.findSubTags("prototype")) {
+
+        }
+
+        for (XmlTag x : genoaRootTag.findSubTags("behavior")) {
+
+        }
+
+
+
+
+
+
+
+
         final Tree tree = new Tree(new DefaultTreeModel(root));
 
 
