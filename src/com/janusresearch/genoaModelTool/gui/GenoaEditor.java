@@ -79,6 +79,7 @@ public class GenoaEditor implements ToolWindowFactory {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setName(genoaModel.getFileName());
+        panel.add(genoaModel.getMyTree());
         getGenoaTabbedPane().add(panel);
         getGenoaTabbedPane().setTabComponentAt(getGenoaTabbedPane().indexOfComponent(panel), createTitlePanel(getGenoaTabbedPane(), panel, genoaModel.getFileName(), genoaModel.getMyFile()));
         getGenoaTabbedPane().setToolTipTextAt(getGenoaTabbedPane().indexOfComponent(panel), genoaModel.getFilePath());
