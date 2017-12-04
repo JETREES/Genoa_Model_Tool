@@ -9,22 +9,30 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.xml.DomManager;
 import com.janusresearch.genoaModelTool.debug.Debug;
+import com.janusresearch.genoaModelTool.genoa.Entity;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+import java.net.MalformedURLException;
 import java.util.Objects;
+
+import icons.*;
+import org.w3c.dom.Node;
 
 @SuppressWarnings("ConstantConditions")
 public class GenoaModel {
-    private final JTree myTree;
+    private JTree myTree;
+    private DefaultTreeModel myTreeModel;
     private final VirtualFile myFile;
     private final String fileName;
     private final String filePath;
+    private CustomIconRenderer customIconRenderer;
 
-    public GenoaModel(Project project, VirtualFile file) {
+    public GenoaModel(Project project, VirtualFile file) throws MalformedURLException {
         myFile = file;
         filePath = file.getPath().substring(file.getPath().indexOf(project.getName()));
         fileName = file.getNameWithoutExtension();
@@ -37,32 +45,40 @@ public class GenoaModel {
 
         //Get the GenoaRoot File Element
         XmlTag genoaRoot = manager.getFileElement(xmlFile, GenoaRoot.class).getRootElement().getXmlTag();
-        myTree = new Tree(buildTree(genoaRoot));
+        buildTree(genoaRoot);
     }
 
-    private DefaultMutableTreeNode buildTree(XmlTag rootTag) {
-        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(rootTag.findFirstSubTag("name").getValue().getText());
+    private DefaultMutableTreeNode buildTree(XmlTag rootTag) throws MalformedURLException {
+        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(treeNodeLabel(rootTag));
+        myTreeModel = new DefaultTreeModel(rootTreeNode);
+        myTree = new Tree(myTreeModel);
+
+
+        customIconRenderer = new CustomIconRenderer();
+
+        myTree.setCellRenderer(new CustomIconRenderer());
         addChildren(rootTreeNode, rootTag);
+        myTree.setCellRenderer(customIconRenderer);
         return(rootTreeNode);
     }
 
-    private void addChildren(DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) {
+    private void addChildren(DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) throws MalformedURLException {
         XmlTag[] childTags = parentXmlTag.getSubTags();
         DefaultMutableTreeNode childTreeNode = null;
         for (XmlTag t : childTags) {
             switch(t.getName()) {
                 case "name" :
+                case "comment" :
+                case "description" :
+                case "destination" :
+                case "entityName" :
                 case "superEntityName" :
+                case "varName" :
                     break;
                 case "entity" :
-                case "attr" :
-                case "toOne" :
-                case "toMany" :
-                case "toManyMap" :
-                case "toManyList" :
-                case "alias" :
-                case "prototype" :
-                    childTreeNode = new DefaultMutableTreeNode(treeNodeLabel(t.findFirstSubTag("name")));
+                    childTreeNode = new DefaultMutableTreeNode(new Entity(t));
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(childTreeNode, t);
                     break;
                 case "choices" :
                     for (XmlTag c : t.getSubTags()) {
@@ -70,87 +86,113 @@ public class GenoaModel {
                         parentTreeNode.add(choice);
                     }
                     break;
-                case "behavior" :
-                    parentTreeNode.add(createBehavior(t));
+                case "literal" :
+                case "variableRef1" :
+                    childTreeNode = new DefaultMutableTreeNode(treeNodeLabel(t));
+                    parentTreeNode.add(childTreeNode);
+                    break;
+                case "propertyPath" :
+                    String parent = t.getParentTag().getName();
+                    switch(parent) {
+                        case "clause" :
+                        case "setProperty" :
+                            childTreeNode = new DefaultMutableTreeNode(treeNodeLabel(t));
+                            parentTreeNode.add(childTreeNode);
+                    }
+                    break;
+                case "prototypeRef" :
+                    if (Objects.equals(t.getParentTag().getName(), "relationshipSetting")) {
+                        String[] split = t.getValue().getText().split(",");
+                        for (String s : split) {
+                            childTreeNode = new DefaultMutableTreeNode(s);
+                        }
+                    }
+                    else {
+                        childTreeNode = new DefaultMutableTreeNode(treeNodeLabel(t));
+                    }
+                    parentTreeNode.add(childTreeNode);
                     break;
                 default :
                     childTreeNode = new DefaultMutableTreeNode(treeNodeLabel(t));
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(childTreeNode, t);
                     break;
             }
-            if (!Objects.equals(t.getName(), "choices")) {
-                parentTreeNode.add(childTreeNode);
-                addChildren(childTreeNode, t);
-            }
         }
-    }
-
-    @Nullable
-    @Contract(pure = true)
-    private MutableTreeNode createEntity(XmlTag t) {
-        t.getSubTags();
-        DefaultMutableTreeNode entityNode = new DefaultMutableTreeNode(t.findFirstSubTag("name").getValue().getText());
-        return null;
-    }
-
-    @Nullable
-    @Contract(pure = true)
-    private MutableTreeNode createPrototype(XmlTag t) {
-        return null;
-    }
-
-    @Nullable
-    @Contract(pure = true)
-    private MutableTreeNode createBehavior(XmlTag t) {
-        return null;
     }
 
     private static String treeNodeLabel(XmlTag childTag) {
         XmlAttribute[] elementAttributes = childTag.getAttributes();
         XmlTag[] subTags = childTag.getSubTags();
         String treeNodeLabel;
-        treeNodeLabel = childTag.getValue().getText();
-
-        Debug.print(treeNodeLabel);
-
-        /*if (elementAttributes != null && elementAttributes.length > 0) {
-            //todo add code here later to handle adding icons????
-        }*/
+        switch(childTag.getName()) {
+            case "alias" :
+            case "attr" :
+            case "toManyMap" :
+            case "toManyList" :
+                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText();
+                break;
+            case "attributeSetting" :
+            case "propertyPathSetting" :
+                treeNodeLabel = childTag.findFirstSubTag("propertyPath").getValue().getText() + " <- " + subTags[1].getValue().getText();
+                break;
+            case "relationshipSetting" :
+            case "toManySetting" :
+            case "toManyListSetting" :
+                treeNodeLabel = childTag.findFirstSubTag("propertyPath").getValue().getText();
+                break;
+            case "toOne" :
+                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText() + "." + childTag.findFirstSubTag("destination").getValue().getText();
+                break;
+            case "entity" :
+                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText() + "." + childTag.findFirstSubTag("superEntityName").getValue().getText();
+                break;
+            case "prototype" :
+                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText() + "." + childTag.findFirstSubTag("entityName").getValue().getText();
+                break;
+            case "behavior" :
+                treeNodeLabel = childTag.findFirstSubTag("description").getValue().getText();
+                break;
+            case "factPattern" :
+                treeNodeLabel = childTag.findFirstSubTag("varName").getValue().getText() + " : " + childTag.findFirstSubTag("entityName").getValue().getText();
+                break;
+            case "clause" :
+                String operator = elementAttributes[0].getValue();
+                StringBuilder treeNodeLabelBuilder = new StringBuilder();
+                for (int i = 0; i < subTags.length; i++) {
+                    if (i > 0) {
+                        treeNodeLabelBuilder.append(" ").append(operator).append(" ");
+                    }
+                    switch(subTags[i].getName()) {
+                        case "propertyPath" :
+                            treeNodeLabelBuilder.append(childTag.findFirstSubTag("propertyPath").getValue().getText());
+                            break;
+                        case "literal" :
+                            treeNodeLabelBuilder.append(childTag.findFirstSubTag("literal").getSubTags()[0].getValue().getText());
+                            break;
+                    }
+                }
+                treeNodeLabel = treeNodeLabelBuilder.toString();
+                break;
+            case "literal" :
+                treeNodeLabel = childTag.findFirstSubTag("value").getValue().getText();
+                break;
+            case "setProperty" :
+                treeNodeLabel = childTag.findFirstSubTag("variableRef1").findFirstSubTag("varName").getValue().getText()
+                        + "." + childTag.findFirstSubTag("propertyPath").getValue().getText()
+                        + " <- " + childTag.findFirstSubTag("literal").findFirstSubTag("value").getValue().getText();
+                break;
+            case "variableRef1" :
+                treeNodeLabel = childTag.findFirstSubTag("varName").getValue().getText();
+                break;
+            case "model" :
+                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText();
+                break;
+            default :
+                treeNodeLabel = childTag.getValue().getText();
+                break;
+        }
         return(treeNodeLabel);
-    }
-
-    private JTree createTree() {
-//        DefaultMutableTreeNode root = new DefaultMutableTreeNode(genoaRoot.getXmlTag().findFirstSubTag("name").getValue());
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode();
-        DefaultMutableTreeNode subNode_1 = new DefaultMutableTreeNode();
-        DefaultMutableTreeNode subNode_2 = new DefaultMutableTreeNode();
-        DefaultMutableTreeNode subNode_3 = new DefaultMutableTreeNode();
-        DefaultMutableTreeNode subNode_4 = new DefaultMutableTreeNode();
-
-        /*XmlTag[] tag = genoaRootTag.findSubTags("entity");
-        for (XmlTag t : tag) {
-            for (XmlTag s : t.findSubTags("attr")) {
-            }
-        }
-        for (XmlTag x : genoaRootTag.findSubTags("prototype")) {
-        }
-        for (XmlTag x : genoaRootTag.findSubTags("behavior")) {
-        }*/
-
-        /*XmlTag[] tags = genoaRootTag.getSubTags();
-        for (XmlTag t : tags) {
-
-        }*/
-
-
-
-
-
-
-
-//        final Tree tree = new Tree(new DefaultTreeModel(root));
-
-
-        return null;
     }
 
     public JTree getMyTree() {

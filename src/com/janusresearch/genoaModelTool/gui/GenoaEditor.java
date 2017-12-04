@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
 import java.util.Objects;
 
 public class GenoaEditor implements ToolWindowFactory {
@@ -34,7 +35,11 @@ public class GenoaEditor implements ToolWindowFactory {
             public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
                 if (Objects.equals(file.getExtension(), "genoa")) {
                     mySource = source;
-                    loadModel(new GenoaModel(project, file));
+                    try {
+                        loadModel(new GenoaModel(project, file));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
