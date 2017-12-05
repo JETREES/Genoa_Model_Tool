@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.xml.DomManager;
-import com.janusresearch.genoaModelTool.genoa.Entity;
+import com.janusresearch.genoaModelTool.genoa.EntityImpl;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -69,7 +69,7 @@ public class GenoaModel {
                 case "varName" :
                     break;
                 case "entity" :
-                    childTreeNode = new DefaultMutableTreeNode(new Entity(t));
+                    childTreeNode = new DefaultMutableTreeNode(new EntityImpl(t));
                     parentTreeNode.add(childTreeNode);
                     addChildren(childTreeNode, t);
                     break;

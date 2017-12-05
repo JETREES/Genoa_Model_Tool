@@ -3,7 +3,7 @@ package com.janusresearch.genoaModelTool.genoa;
 import com.intellij.psi.xml.XmlTag;
 
 @SuppressWarnings("ConstantConditions")
-public class ToOne {
+public class ToOneImpl {
     private XmlTag toOneTag;
     private String name = "";
     private String description = "";
@@ -15,13 +15,13 @@ public class ToOne {
     private String bindable = "";
     private String nodeText = "";
 
-    public ToOne() {
+    public ToOneImpl() {
         this.setName("toOne");
         this.setAuto("true");
         updateToOneNodeText();
     }
 
-    public ToOne(XmlTag xmlTag) {
+    public ToOneImpl(XmlTag xmlTag) {
         this.toOneTag = xmlTag;
         this.setName(xmlTag.getSubTagText("name"));
         this.setDescription(xmlTag.getSubTagText("description"));

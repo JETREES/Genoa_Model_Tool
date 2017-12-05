@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class Attribute {
+public class AttributeImpl {
     private XmlTag attrTag;
     private String name = "";
     private String typeName = "";
@@ -14,15 +14,15 @@ public class Attribute {
     private String description = "";
     private String source = "";
     private String target = "";
-    private List<Choices> choicesList = new ArrayList<>();
+    private List<ChoicesImpl> choicesImplList = new ArrayList<>();
 
-    public Attribute() {
+    public AttributeImpl() {
         this.setName("Attribute");
         this.setTypeName("String");
         updateAttrNodeText();
     }
 
-    public Attribute(XmlTag xmlTag) {
+    public AttributeImpl(XmlTag xmlTag) {
         this.attrTag = xmlTag;
         this.setName(xmlTag.getSubTagText("name"));
         this.setTypeName(xmlTag.getAttribute("typeName").getValue());
@@ -90,13 +90,13 @@ public class Attribute {
         this.getAttrTag().findFirstSubTag("target").getValue().setText(target);
     }
 
-    public List<Choices> getChoicesList() {
-        return choicesList;
+    public List<ChoicesImpl> getChoicesImplList() {
+        return choicesImplList;
     }
 
-    public Choices addChoice(XmlTag value) {
-        Choices choice = new Choices(value);
-        this.getChoicesList().add(choice);
+    public ChoicesImpl addChoice(XmlTag value) {
+        ChoicesImpl choice = new ChoicesImpl(value);
+        this.getChoicesImplList().add(choice);
         return choice;
     }
 }

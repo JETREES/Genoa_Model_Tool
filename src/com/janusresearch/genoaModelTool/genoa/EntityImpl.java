@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class Entity {
+public class EntityImpl {
     private XmlTag entityTag;
     private String name = "";
     private String superEntityName = "";
@@ -14,15 +14,15 @@ public class Entity {
     private String comment = "";
     private String description = "";
     private String abstract_ = "";
-    private List<Attribute> attributeList = new ArrayList<>();
-    private List<ToOne> toOneList = new ArrayList<>();
+    private List<AttributeImpl> attributeImplList = new ArrayList<>();
+    private List<ToOneImpl> toOneImplList = new ArrayList<>();
 
-    public Entity() {
+    public EntityImpl() {
         this.name = "Entity";
         this.updateEntityNodeText();
     }
 
-    public Entity(XmlTag xmlTag) {
+    public EntityImpl(XmlTag xmlTag) {
         this.entityTag = xmlTag;
         this.name = xmlTag.getSubTagText("name");
         this.superEntityName = xmlTag.getSubTagText("superEntityName");
@@ -91,23 +91,23 @@ public class Entity {
         this.getEntityTag().findFirstSubTag("abstract").getValue().setText(abstract_);
     }
 
-    public List<Attribute> getAttributeList() {
-        return attributeList;
+    public List<AttributeImpl> getAttributeImplList() {
+        return attributeImplList;
     }
 
-    public Attribute addAttribute(XmlTag attrTag) {
-        Attribute attribute = new Attribute(attrTag);
-        this.getAttributeList().add(attribute);
-        return attribute;
+    public AttributeImpl addAttribute(XmlTag attrTag) {
+        AttributeImpl attributeImpl = new AttributeImpl(attrTag);
+        this.getAttributeImplList().add(attributeImpl);
+        return attributeImpl;
     }
 
-    public List<ToOne> getToOneList() {
-        return toOneList;
+    public List<ToOneImpl> getToOneImplList() {
+        return toOneImplList;
     }
 
-    public ToOne addToOne(XmlTag toOneTag) {
-        ToOne toOne = new ToOne(toOneTag);
-        this.getToOneList().add(toOne);
-        return toOne;
+    public ToOneImpl addToOne(XmlTag toOneTag) {
+        ToOneImpl toOneImpl = new ToOneImpl(toOneTag);
+        this.getToOneImplList().add(toOneImpl);
+        return toOneImpl;
     }
 }

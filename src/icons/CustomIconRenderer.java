@@ -1,7 +1,7 @@
 package icons;
 
 
-import com.janusresearch.genoaModelTool.genoa.Entity;
+import com.janusresearch.genoaModelTool.genoa.EntityImpl;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -29,10 +29,10 @@ public class CustomIconRenderer extends DefaultTreeCellRenderer {
         Object nodeObj = ((DefaultMutableTreeNode) value).getUserObject();
 
 
-        if (nodeObj instanceof Entity) {
-            Entity tempEntity = (Entity) nodeObj;
+        if (nodeObj instanceof EntityImpl) {
+            EntityImpl tempEntityImpl = (EntityImpl) nodeObj;
             label.setIcon(GenoaIcons.Objects.Entity);
-            label.setText(tempEntity.getName());
+            label.setText(tempEntityImpl.getName());
         }
         return this.label;
     }

@@ -2,17 +2,17 @@ package com.janusresearch.genoaModelTool.genoa;
 
 import com.intellij.psi.xml.XmlTag;
 
-public class Choices {
+public class ChoicesImpl {
     private XmlTag valueTag;
     private String name = "";
     private String nodeText = "";
 
-    public Choices() {
+    public ChoicesImpl() {
         this.setName("Choice");
         updateChoiceNodeText();
     }
 
-    public Choices(XmlTag value) {
+    public ChoicesImpl(XmlTag value) {
         this.valueTag = value;
         this.setName(value.getText());
         updateChoiceNodeText();
