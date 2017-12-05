@@ -5,7 +5,7 @@ import com.intellij.psi.xml.XmlTag;
 public class Choices {
     private XmlTag valueTag;
     private String name = "";
-    private String choiceNodeText = "";
+    private String nodeText = "";
 
     public Choices() {
         this.setName("Choice");
@@ -32,11 +32,11 @@ public class Choices {
         this.updateChoiceNodeText();
     }
 
-    public String getChoiceNodeText() {
-        return choiceNodeText;
+    public String getNodeText() {
+        return nodeText;
     }
 
     private void updateChoiceNodeText() {
-        this.choiceNodeText = getName();
+        this.nodeText = getName();
     }
 }

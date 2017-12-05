@@ -13,7 +13,7 @@ public class ToOne {
     private String inversePath = "";
     private String auto = "";
     private String bindable = "";
-    private String toOneNodeText = "";
+    private String nodeText = "";
 
     public ToOne() {
         this.setName("toOne");
@@ -111,11 +111,11 @@ public class ToOne {
         this.getToOneTag().findFirstSubTag("bindable").getValue().setText(bindable);
     }
 
-    public String getToOneNodeText() {
-        return toOneNodeText;
+    public String getNodeText() {
+        return nodeText;
     }
 
     private void updateToOneNodeText() {
-        this.toOneNodeText = getName();
+        this.nodeText = getName();
     }
 }

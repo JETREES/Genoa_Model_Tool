@@ -10,7 +10,7 @@ public class Entity {
     private XmlTag entityTag;
     private String name = "";
     private String superEntityName = "";
-    private String entityNodeText = "";
+    private String nodeText = "";
     private String comment = "";
     private String description = "";
     private String abstract_ = "";
@@ -40,9 +40,9 @@ public class Entity {
         return name;
     }
 
-    public void setName(String value) {
-        this.name = value;
-        this.getEntityTag().findFirstSubTag("name").getValue().setText(value);
+    public void setName(String name) {
+        this.name = name;
+        this.getEntityTag().findFirstSubTag("name").getValue().setText(name);
         this.updateEntityNodeText();
     }
 
@@ -74,12 +74,12 @@ public class Entity {
         this.getEntityTag().findFirstSubTag("description").getValue().setText(description);
     }
 
-    public String getEntityNodeText() {
-        return entityNodeText;
+    public String getNodeText() {
+        return nodeText;
     }
 
     private void updateEntityNodeText() {
-        this.entityNodeText = getName() + "." + getSuperEntityName();
+        this.nodeText = getName() + "." + getSuperEntityName();
     }
 
     public String getAbstract_() {

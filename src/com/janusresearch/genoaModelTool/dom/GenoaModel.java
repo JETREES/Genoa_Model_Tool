@@ -8,20 +8,14 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.xml.DomManager;
-import com.janusresearch.genoaModelTool.debug.Debug;
 import com.janusresearch.genoaModelTool.genoa.Entity;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import java.net.MalformedURLException;
 import java.util.Objects;
 
 import icons.*;
-import org.w3c.dom.Node;
 
 @SuppressWarnings("ConstantConditions")
 public class GenoaModel {
@@ -30,9 +24,8 @@ public class GenoaModel {
     private final VirtualFile myFile;
     private final String fileName;
     private final String filePath;
-    private CustomIconRenderer customIconRenderer;
 
-    public GenoaModel(Project project, VirtualFile file) throws MalformedURLException {
+    public GenoaModel(Project project, VirtualFile file) {
         myFile = file;
         filePath = file.getPath().substring(file.getPath().indexOf(project.getName()));
         fileName = file.getNameWithoutExtension();
@@ -48,21 +41,21 @@ public class GenoaModel {
         buildTree(genoaRoot);
     }
 
-    private DefaultMutableTreeNode buildTree(XmlTag rootTag) throws MalformedURLException {
+    private void buildTree(XmlTag rootTag){
         DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(treeNodeLabel(rootTag));
         myTreeModel = new DefaultTreeModel(rootTreeNode);
         myTree = new Tree(myTreeModel);
 
 
-        customIconRenderer = new CustomIconRenderer();
+//        CustomIconRenderer customIconRenderer = new CustomIconRenderer();
+        CustomRenderer customRenderer = new CustomRenderer();
 
-        myTree.setCellRenderer(new CustomIconRenderer());
+//        myTree.setCellRenderer(new CustomIconRenderer());
         addChildren(rootTreeNode, rootTag);
-        myTree.setCellRenderer(customIconRenderer);
-        return(rootTreeNode);
+        myTree.setCellRenderer(customRenderer);
     }
 
-    private void addChildren(DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) throws MalformedURLException {
+    private void addChildren(DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) {
         XmlTag[] childTags = parentXmlTag.getSubTags();
         DefaultMutableTreeNode childTreeNode = null;
         for (XmlTag t : childTags) {
@@ -128,6 +121,7 @@ public class GenoaModel {
         switch(childTag.getName()) {
             case "alias" :
             case "attr" :
+            case "model" :
             case "toManyMap" :
             case "toManyList" :
                 treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText();
@@ -184,9 +178,6 @@ public class GenoaModel {
                 break;
             case "variableRef1" :
                 treeNodeLabel = childTag.findFirstSubTag("varName").getValue().getText();
-                break;
-            case "model" :
-                treeNodeLabel = childTag.findFirstSubTag("name").getValue().getText();
                 break;
             default :
                 treeNodeLabel = childTag.getValue().getText();

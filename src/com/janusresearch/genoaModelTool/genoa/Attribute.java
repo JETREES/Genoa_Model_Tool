@@ -10,7 +10,7 @@ public class Attribute {
     private XmlTag attrTag;
     private String name = "";
     private String typeName = "";
-    private String attrNodeText = "";
+    private String nodeText = "";
     private String description = "";
     private String source = "";
     private String target = "";
@@ -55,12 +55,12 @@ public class Attribute {
         this.getAttrTag().setAttribute("typeName", typeName);
     }
 
-    public String getAttrNodeText() {
-        return attrNodeText;
+    public String getNodeText() {
+        return nodeText;
     }
 
     private void updateAttrNodeText() {
-        this.attrNodeText = getName();
+        this.nodeText = getName();
     }
 
     public String getDescription() {
