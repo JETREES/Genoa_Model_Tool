@@ -21,6 +21,12 @@ public interface Model {
     String getName();
 
     /**
+     * Returns true/false for '<em><b>Name</b></em>' element not null.
+     * @return true/false for '<em>Name</em>' element not null.
+     */
+    boolean hasNameTag();
+
+    /**
      * Sets the value of the '<em><b>Name</b></em>' element.
      * @param name the new value of the '<em>Name</em>' element.
      */
@@ -31,6 +37,12 @@ public interface Model {
      * @return the value of the '<em>Package String</em>' element.
      */
     String getPackageString();
+
+    /**
+     * Returns true/false for '<em><b>Package String</b></em>' element not null.
+     * @return true/false for '<em>Package String</em>' element not null.
+     */
+    boolean hasPackageStringTag();
 
     /**
      * Sets the value of the '<em><b>Package String</b></em>' element.
@@ -45,6 +57,12 @@ public interface Model {
     String getDescription();
 
     /**
+     * Returns true/false for '<em><b>Description</b></em>' element not null.
+     * @return true/false for '<em>Description</em>' element not null.
+     */
+    boolean hasDescriptionTag();
+
+    /**
      * Sets the value of the '<em><b>Description</b></em>' element.
      * @param description the new value of the '<em>Description</em>' element.
      */
@@ -55,6 +73,12 @@ public interface Model {
      * @return the value of the '<em>Uri</em>' element.
      */
     String getUri();
+
+    /**
+     * Returns true/false for '<em><b>Uri</b></em>' element not null.
+     * @return true/false for '<em>Uri</em>' element not null.
+     */
+    boolean hasUriTag();
 
     /**
      * Sets the value of the '<em><b>Uri</b></em>' element.

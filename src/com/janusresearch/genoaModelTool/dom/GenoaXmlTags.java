@@ -47,4 +47,6 @@ public interface GenoaXmlTags {
     String VALUE = "value";
     String VAR_NAME = "varName";
     String VARIABLE_REF1 = "variableRef1";
+    String DESTINATION_KEY = "destinationKey";
+    String ALIAS_PROPERTY_PATH = "aliasPropertyPath";
 }

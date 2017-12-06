@@ -2,6 +2,7 @@ package com.janusresearch.genoaModelTool.genoa;
 
 import com.intellij.psi.xml.XmlTag;
 import com.janusresearch.genoaModelTool.genoa.impl.AttributeImpl;
+import com.janusresearch.genoaModelTool.genoa.impl.ToManyImpl;
 import com.janusresearch.genoaModelTool.genoa.impl.ToOneImpl;
 
 import java.util.List;
@@ -20,20 +21,32 @@ public interface Entity {
     String getName();
 
     /**
+     * Returns true/false for '<em><b>Name</b></em>' element not null.
+     * @return true/false for '<em>Name</em>' element not null.
+     */
+    boolean hasNameTag();
+
+    /**
      * Sets the value of the '<em><b>Name</b></em>' element.
      * @param name the new value of the '<em>Name</em>' element.
      */
     void setName(String name);
 
     /**
-     * Returns the value of the '<em><b>Super EntityImpl Name</b></em>' element.
-     * @return the value of the '<em>Super EntityImpl Name</em>' element.
+     * Returns the value of the '<em><b>Super Entity Name</b></em>' element.
+     * @return the value of the '<em>Super Entity Name</em>' element.
      */
     String getSuperEntityName();
 
     /**
-     * Sets the value of the '<em><b>Super EntityImpl Name</b></em>' element.
-     * @param superEntityName the new value of the '<em>Super EntityImpl Name</em>' element.
+     * Returns true/false for '<em><b>Super Entity Name</b></em>' element not null.
+     * @return true/false for '<em>Super Entity Name</em>' element not null.
+     */
+    boolean hasSuperEntityNameTag();
+
+    /**
+     * Sets the value of the '<em><b>Super Entity Name</b></em>' element.
+     * @param superEntityName the new value of the '<em>Super Entity Name</em>' element.
      */
     void setSuperEntityName(String superEntityName);
 
@@ -42,6 +55,12 @@ public interface Entity {
      * @return the value of the '<em>Comment</em>' element.
      */
     String getComment();
+
+    /**
+     * Returns true/false for '<em><b>Comment</b></em>' element not null.
+     * @return true/false for '<em>Comment</em>' element not null.
+     */
+    boolean hasCommentTag();
 
     /**
      * Sets the value of the '<em><b>Comment</b></em>' element.
@@ -54,6 +73,12 @@ public interface Entity {
      * @return the value of the '<em>Description</em>' element.
      */
     String getDescription();
+
+    /**
+     * Returns true/false for '<em><b>Description</b></em>' element not null.
+     * @return true/false for '<em>Description</em>' element not null.
+     */
+    boolean hasDescriptionTag();
 
     /**
      * Sets the value of the '<em><b>Description</b></em>' element.
@@ -77,6 +102,12 @@ public interface Entity {
      * @return the value of the '<em>Abstract</em>' element.
      */
     String getAbstract_();
+
+    /**
+     * Returns true/false for '<em><b>Abstract</b></em>' element not null.
+     * @return true/false for '<em>Abstract</em>' element not null.
+     */
+    boolean hasAbstractTag();
 
     /**
      * Sets the value of the '<em><b>Abstract</b></em>' element.
@@ -109,4 +140,17 @@ public interface Entity {
      * @return the '<em>ToOne</em>' object for the created ToOne
      */
     ToOneImpl addToOne(XmlTag toOneTag);
+
+    /**
+     * Returns the list of the '<em><b>ToMany</b></em>' objects for an EntityImpl.
+     * @return the list of the '<em>ToMany</em>' objects for an EntityImpl.
+     */
+    List<ToManyImpl> getToManyImplList();
+
+    /**
+     * Adds the '<em><b>ToMany</b></em>' object to the ToOne List and then returns the object
+     * @param toManyTag the XmlTag for the current ToMany
+     * @return the '<em>ToMany</em>' object for the created ToMany
+     */
+    ToManyImpl addToMany(XmlTag toManyTag);
 }

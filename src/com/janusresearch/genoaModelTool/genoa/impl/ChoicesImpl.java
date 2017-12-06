@@ -1,18 +1,23 @@
 package com.janusresearch.genoaModelTool.genoa.impl;
 
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlTag;
 
 public class ChoicesImpl extends GenoaObject implements com.janusresearch.genoaModelTool.genoa.Choices {
+    private final Project project;
     private XmlTag valueTag;
-    private String value = "";
-    private String nodeText = "";
+    private String value = null;
+    private String nodeText = null;
 
-    public ChoicesImpl() {
+    public ChoicesImpl(Project project) {
+        this.project = project;
         this.setName("Choice");
         updateNodeText();
     }
 
-    public ChoicesImpl(XmlTag value) {
+    ChoicesImpl(Project project, XmlTag value) {
+        this.project = project;
         this.valueTag = value;
         this.setName(value.getText());
         updateNodeText();
@@ -28,7 +33,7 @@ public class ChoicesImpl extends GenoaObject implements com.janusresearch.genoaM
 
     public void setName(String value) {
         this.value = value;
-        this.getValueTag().getValue().setText(value);
+        WriteCommandAction.runWriteCommandAction(project, () -> this.getValueTag().getValue().setText(value));
         this.updateNodeText();
     }
 

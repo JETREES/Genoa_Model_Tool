@@ -1,16 +1,13 @@
 package com.janusresearch.genoaModelTool.genoa;
 
 import com.intellij.psi.xml.XmlTag;
-import com.janusresearch.genoaModelTool.genoa.impl.ChoicesImpl;
 
-import java.util.List;
-
-public interface Attribute {
+public interface Alias {
     /**
-     * Returns the XmlTag of the '<em><b>Attr</b></em>' element.
-     * @return the XmlTag of the '<em>Attr</em>' element.
+     * Returns the XmlTag of the '<em><b>Alias</b></em>' element.
+     * @return the XmlTag of the '<em>Alias</em>' element.
      */
-    XmlTag getAttrTag();
+    XmlTag getAliasTag();
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' element.
@@ -49,17 +46,6 @@ public interface Attribute {
     void setTypeName(String typeName);
 
     /**
-     * Returns the value of the '<em><b>Node Text</b></em>' String.
-     * @return the value of the '<em>Node Text</em>' element.
-     */
-    String getNodeText();
-
-    /**
-     * Updates the Node Text for the JTree node label
-     */
-    void updateNodeText();
-
-    /**
      * Returns the value of the '<em><b>Description</b></em>' element.
      * @return the value of the '<em>Description</em>' element.
      */
@@ -76,6 +62,42 @@ public interface Attribute {
      * @param description the new value of the '<em>Description</em>' element.
      */
     void setDescription(String description);
+
+    /**
+     * Returns the value of the '<em><b>Comment</b></em>' element.
+     * @return the value of the '<em>Comment</em>' element.
+     */
+    String getComment();
+
+    /**
+     * Returns true/false for '<em><b>Comment</b></em>' element not null.
+     * @return true/false for '<em>Comment</em>' element not null.
+     */
+    boolean hasCommentTag();
+
+    /**
+     * Sets the value of the '<em><b>Comment</b></em>' element.
+     * @param comment the new value of the '<em>Comment</em>' element.
+     */
+    void setComment(String comment);
+
+    /**
+     * Returns the value of the '<em><b>Transient</b></em>' element.
+     * @return the value of the '<em>Transient</em>' element.
+     */
+    String getTransient_();
+
+    /**
+     * Returns true/false for '<em><b>Transient</b></em>' element not null.
+     * @return true/false for '<em>Transient</em>' element not null.
+     */
+    boolean hasTransientTag();
+
+    /**
+     * Sets the value of the '<em><b>Transient</b></em>' element.
+     * @param transient_ the new value of the '<em>Transient</em>' element.
+     */
+    void setTransient_(String transient_);
 
     /**
      * Returns the value of the '<em><b>Source</b></em>' element.
@@ -114,15 +136,31 @@ public interface Attribute {
     void setTarget(String target);
 
     /**
-     * Returns the list of the '<em><b>ChoicesImpl</b></em>' objects for an EntityImpl.
-     * @return the list of the '<em>ChoicesImpl</em>' objects for an EntityImpl.
+     * Returns the value of the '<em><b>Alias Property Path</b></em>' element.
+     * @return the value of the '<em>Alias Property Path</em>' element.
      */
-    List<ChoicesImpl> getChoicesImplList();
+    String getAliasPropertyPath();
 
     /**
-     * Adds the '<em><b>ChoicesImpl</b></em>' object to the ChoicesImpl List and then returns the object
-     * @param value the XmlTag for the current ChoicesImpl
-     * @return the '<em>ChoicesImpl</em>' object for the created ChoicesImpl
+     * Returns true/false for '<em><b>Alias Property Path</b></em>' element not null.
+     * @return true/false for '<em>Alias Property Path</em>' element not null.
      */
-    ChoicesImpl addChoice(XmlTag value);
+    boolean hasAliasPropertyPathTag();
+
+    /**
+     * Sets the value of the '<em><b>Alias Property Path</b></em>' element.
+     * @param aliasPropertyPath the new value of the '<em>Alias Property Path</em>' element.
+     */
+    void setAliasPropertyPath(String aliasPropertyPath);
+
+    /**
+     * Returns the value of the '<em><b>Node Text</b></em>' String.
+     * @return the value of the '<em>Node Text</em>' element.
+     */
+    String getNodeText();
+
+    /**
+     * Updates the Node Text for the JTree node label
+     */
+    void updateNodeText();
 }

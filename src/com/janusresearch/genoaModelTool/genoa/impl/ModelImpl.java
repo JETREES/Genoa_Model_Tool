@@ -4,12 +4,13 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlTag;
 import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
+import com.janusresearch.genoaModelTool.genoa.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class ModelImpl extends GenoaObject implements com.janusresearch.genoaModelTool.genoa.Model {
+public class ModelImpl extends GenoaObject implements Model {
     private final Project project;
     private XmlTag modelTag;
     private String name = null;
@@ -22,12 +23,21 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     private List<BehaviorImpl> behaviorImplList = new ArrayList<>();
 
     public ModelImpl(Project project, XmlTag xmlTag) {
-        this.modelTag = xmlTag;
         this.project = project;
-        this.setName(xmlTag.getSubTagText(GenoaXmlTags.NAME));
-        this.setPackageString(xmlTag.getSubTagText(GenoaXmlTags.PACKAGE_STRING));
-        this.setDescription(xmlTag.getSubTagText(GenoaXmlTags.DESCRIPTION));
-        this.setUri(xmlTag.getSubTagText(GenoaXmlTags.URI));
+        this.setType(GenoaXmlTags.MODEL);
+        this.modelTag = xmlTag;
+        if (hasNameTag()) {
+            this.setName(xmlTag.getSubTagText(GenoaXmlTags.NAME));
+        }
+        if (hasPackageStringTag()) {
+            this.setPackageString(xmlTag.getSubTagText(GenoaXmlTags.PACKAGE_STRING));
+        }
+        if (hasDescriptionTag()) {
+            this.setDescription(xmlTag.getSubTagText(GenoaXmlTags.DESCRIPTION));
+        }
+        if (hasUriTag()) {
+            this.setUri(xmlTag.getSubTagText(GenoaXmlTags.URI));
+        }
         this.setImportList();
         this.setType(GenoaXmlTags.MODEL);
     }
@@ -45,12 +55,8 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public void setName(String name) {
-        if (hasNameTag()) {
-            this.name = name;
-            WriteCommandAction.runWriteCommandAction(project, () -> {
-                this.getModelTag().findFirstSubTag(GenoaXmlTags.NAME).getValue().setText(name);
-            });
-        }
+        this.name = name;
+        WriteCommandAction.runWriteCommandAction(project, () -> this.getModelTag().findFirstSubTag(GenoaXmlTags.NAME).getValue().setText(name));
     }
 
     public String getPackageString() {
@@ -62,10 +68,8 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public void setPackageString(String packageString) {
-        if (hasPackageStringTag()) {
-            this.packageString = packageString;
-            this.getModelTag().findFirstSubTag(GenoaXmlTags.PACKAGE_STRING).getValue().setText(packageString);
-        }
+        this.packageString = packageString;
+        WriteCommandAction.runWriteCommandAction(project, () -> this.getModelTag().findFirstSubTag(GenoaXmlTags.PACKAGE_STRING).getValue().setText(packageString));
     }
 
     public String getDescription() {
@@ -77,10 +81,8 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public void setDescription(String description) {
-        if (hasDescriptionTag()) {
-            this.description = description;
-            this.getModelTag().findFirstSubTag(GenoaXmlTags.DESCRIPTION).getValue().setText(description);
-        }
+        this.description = description;
+        WriteCommandAction.runWriteCommandAction(project, () -> this.getModelTag().findFirstSubTag(GenoaXmlTags.DESCRIPTION).getValue().setText(description));
     }
 
     public String getUri() {
@@ -92,10 +94,8 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public void setUri(String uri) {
-        if (hasUriTag()) {
-            this.uri = uri;
-            this.getModelTag().findFirstSubTag(GenoaXmlTags.URI).getValue().setText(uri);
-        }
+        this.uri = uri;
+        WriteCommandAction.runWriteCommandAction(project, () -> this.getModelTag().findFirstSubTag(GenoaXmlTags.URI).getValue().setText(uri));
     }
 
     public List<String> getImportList() {
@@ -119,7 +119,7 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public EntityImpl addEntity(XmlTag entityTag) {
-        EntityImpl entityImpl = new EntityImpl(entityTag);
+        EntityImpl entityImpl = new EntityImpl(project, entityTag);
         this.getEntityImplList().add(entityImpl);
         return entityImpl;
     }
@@ -129,7 +129,7 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public PrototypeImpl addPrototype(XmlTag prototypeTag) {
-        PrototypeImpl prototypeImpl = new PrototypeImpl(prototypeTag);
+        PrototypeImpl prototypeImpl = new PrototypeImpl(project, prototypeTag);
         this.getPrototypeImplList().add(prototypeImpl);
         return prototypeImpl;
     }
@@ -139,7 +139,7 @@ public class ModelImpl extends GenoaObject implements com.janusresearch.genoaMod
     }
 
     public BehaviorImpl addBehavior(XmlTag behaviorTag) {
-        BehaviorImpl behaviorImpl = new BehaviorImpl(behaviorTag);
+        BehaviorImpl behaviorImpl = new BehaviorImpl(project, behaviorTag);
         this.getBehaviorImplList().add(behaviorImpl);
         return behaviorImpl;
     }

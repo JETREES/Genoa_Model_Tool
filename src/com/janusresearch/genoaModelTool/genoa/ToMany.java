@@ -2,12 +2,12 @@ package com.janusresearch.genoaModelTool.genoa;
 
 import com.intellij.psi.xml.XmlTag;
 
-public interface ToOne {
+public interface ToMany {
     /**
-     * Returns the XmlTag of the '<em><b>To One</b></em>' element.
-     * @return the XmlTag of the '<em>To One</em>' element.
+     * Returns the XmlTag of the '<em><b>To Many</b></em>' element.
+     * @return the XmlTag of the '<em>To Many</em>' element.
      */
-    XmlTag getToOneTag();
+    XmlTag getToManyTag();
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' element.
@@ -116,42 +116,6 @@ public interface ToOne {
      * @param inversePath the new value of the '<em>Inverse Path</em>' element.
      */
     void setInversePath(String inversePath);
-
-    /**
-     * Returns the value of the '<em><b>Auto</b></em>' element.
-     * @return the value of the '<em>Auto</em>' element.
-     */
-    String getAuto();
-
-    /**
-     * Returns true/false for '<em><b>Auto</b></em>' element not null.
-     * @return true/false for '<em>Auto</em>' element not null.
-     */
-    boolean hasAutoTag();
-
-    /**
-     * Sets the value of the '<em><b>Auto</b></em>' element.
-     * @param auto the new value of the '<em>Auto</em>' element.
-     */
-    void setAuto(String auto);
-
-    /**
-     * Returns the value of the '<em><b>Bindable</b></em>' element.
-     * @return the value of the '<em>Bindable</em>' element.
-     */
-    String getBindable();
-
-    /**
-     * Returns true/false for '<em><b>Bindable</b></em>' element not null.
-     * @return true/false for '<em>Bindable</em>' element not null.
-     */
-    boolean hasBindableTag();
-
-    /**
-     * Sets the value of the '<em><b>Bindable</b></em>' element.
-     * @param bindable the new value of the '<em>Bindable</em>' element.
-     */
-    void setBindable(String bindable);
 
     /**
      * Returns the value of the '<em><b>Node Text</b></em>' String.

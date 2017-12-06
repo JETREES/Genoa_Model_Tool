@@ -2,12 +2,12 @@ package com.janusresearch.genoaModelTool.genoa;
 
 import com.intellij.psi.xml.XmlTag;
 
-public interface ToOne {
+public interface ToManyMap {
     /**
-     * Returns the XmlTag of the '<em><b>To One</b></em>' element.
-     * @return the XmlTag of the '<em>To One</em>' element.
+     * Returns the XmlTag of the '<em><b>To Many Map</b></em>' element.
+     * @return the XmlTag of the '<em>To Many Map</em>' element.
      */
-    XmlTag getToOneTag();
+    XmlTag getToManyMapTag();
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' element.
@@ -118,40 +118,22 @@ public interface ToOne {
     void setInversePath(String inversePath);
 
     /**
-     * Returns the value of the '<em><b>Auto</b></em>' element.
-     * @return the value of the '<em>Auto</em>' element.
+     * Returns the value of the '<em><b>Destination Key</b></em>' element.
+     * @return the value of the '<em>Destination Key</em>' element.
      */
-    String getAuto();
+    String getDestinationKey();
 
     /**
-     * Returns true/false for '<em><b>Auto</b></em>' element not null.
-     * @return true/false for '<em>Auto</em>' element not null.
+     * Returns true/false for '<em><b>Destination Key</b></em>' element not null.
+     * @return true/false for '<em>Destination Key</em>' element not null.
      */
-    boolean hasAutoTag();
+    boolean hasDestinationKeyTag();
 
     /**
-     * Sets the value of the '<em><b>Auto</b></em>' element.
-     * @param auto the new value of the '<em>Auto</em>' element.
+     * Sets the value of the '<em><b>Destination Key</b></em>' element.
+     * @param destinationKey the new value of the '<em>Destination Key</em>' element.
      */
-    void setAuto(String auto);
-
-    /**
-     * Returns the value of the '<em><b>Bindable</b></em>' element.
-     * @return the value of the '<em>Bindable</em>' element.
-     */
-    String getBindable();
-
-    /**
-     * Returns true/false for '<em><b>Bindable</b></em>' element not null.
-     * @return true/false for '<em>Bindable</em>' element not null.
-     */
-    boolean hasBindableTag();
-
-    /**
-     * Sets the value of the '<em><b>Bindable</b></em>' element.
-     * @param bindable the new value of the '<em>Bindable</em>' element.
-     */
-    void setBindable(String bindable);
+    void setDestinationKey(String destinationKey);
 
     /**
      * Returns the value of the '<em><b>Node Text</b></em>' String.
