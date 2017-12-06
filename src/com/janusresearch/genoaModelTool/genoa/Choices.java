@@ -4,8 +4,8 @@ import com.intellij.psi.xml.XmlTag;
 
  public interface Choices {
      /**
-      * Returns the XmlTag of the '<em><b>Choices -> Value</b></em>' element.
-      * @return the XmlTag of the '<em>Choices -> Value</em>' element.
+      * Returns the XmlTag of the '<em><b>ChoicesImpl -> Value</b></em>' element.
+      * @return the XmlTag of the '<em>ChoicesImpl -> Value</em>' element.
       */
      XmlTag getValueTag();
 

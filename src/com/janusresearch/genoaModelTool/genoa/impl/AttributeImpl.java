@@ -2,13 +2,12 @@ package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
 import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
-import com.janusresearch.genoaModelTool.genoa.Attribute;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class AttributeImpl extends GenoaObjectImpl implements Attribute {
+public class AttributeImpl extends GenoaObject implements com.janusresearch.genoaModelTool.genoa.Attribute {
     private XmlTag attrTag;
     private String name = "";
     private String typeName = "";

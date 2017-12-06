@@ -84,15 +84,15 @@ public interface Attribute {
     void setTarget(String target);
 
     /**
-     * Returns the list of the '<em><b>Choices</b></em>' objects for an Entity.
-     * @return the list of the '<em>Choices</em>' objects for an Entity.
+     * Returns the list of the '<em><b>ChoicesImpl</b></em>' objects for an EntityImpl.
+     * @return the list of the '<em>ChoicesImpl</em>' objects for an EntityImpl.
      */
     List<ChoicesImpl> getChoicesImplList();
 
     /**
-     * Adds the '<em><b>Choices</b></em>' object to the Choices List and then returns the object
-     * @param value the XmlTag for the current Choices
-     * @return the '<em>Choices</em>' object for the created Choices
+     * Adds the '<em><b>ChoicesImpl</b></em>' object to the ChoicesImpl List and then returns the object
+     * @param value the XmlTag for the current ChoicesImpl
+     * @return the '<em>ChoicesImpl</em>' object for the created ChoicesImpl
      */
     ChoicesImpl addChoice(XmlTag value);
 }

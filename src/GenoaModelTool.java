@@ -16,9 +16,9 @@ public class GenoaModelTool extends AbstractProjectComponent{
 
     @Override
     public void projectOpened() {
-        //Create the Genoa ModelImpl Tool Window when a project is opened
+        //Create the Genoa Model Tool Window when a project is opened
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
-        ToolWindow toolWindow = toolWindowManager.registerToolWindow("Genoa ModelImpl Tool", false, ToolWindowAnchor.RIGHT);
+        ToolWindow toolWindow = toolWindowManager.registerToolWindow("Genoa Model Tool", false, ToolWindowAnchor.RIGHT);
         GenoaEditor genoaEditor = new GenoaEditor(project);
         genoaEditor.createToolWindowContent(project, toolWindow);
 

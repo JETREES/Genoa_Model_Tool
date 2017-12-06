@@ -1,9 +1,8 @@
 package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
-import com.janusresearch.genoaModelTool.genoa.Choices;
 
-public class ChoicesImpl extends GenoaObjectImpl implements Choices{
+public class ChoicesImpl extends GenoaObject implements com.janusresearch.genoaModelTool.genoa.Choices {
     private XmlTag valueTag;
     private String value = "";
     private String nodeText = "";

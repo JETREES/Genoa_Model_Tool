@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface Entity {
     /**
-     * Returns the XmlTag of the '<em><b>Entity</b></em>' element.
-     * @return the XmlTag of the '<em>Entity</em>' element.
+     * Returns the XmlTag of the '<em><b>EntityImpl</b></em>' element.
+     * @return the XmlTag of the '<em>EntityImpl</em>' element.
      */
     XmlTag getEntityTag();
 
@@ -26,14 +26,14 @@ public interface Entity {
     void setName(String name);
 
     /**
-     * Returns the value of the '<em><b>Super Entity Name</b></em>' element.
-     * @return the value of the '<em>Super Entity Name</em>' element.
+     * Returns the value of the '<em><b>Super EntityImpl Name</b></em>' element.
+     * @return the value of the '<em>Super EntityImpl Name</em>' element.
      */
     String getSuperEntityName();
 
     /**
-     * Sets the value of the '<em><b>Super Entity Name</b></em>' element.
-     * @param superEntityName the new value of the '<em>Super Entity Name</em>' element.
+     * Sets the value of the '<em><b>Super EntityImpl Name</b></em>' element.
+     * @param superEntityName the new value of the '<em>Super EntityImpl Name</em>' element.
      */
     void setSuperEntityName(String superEntityName);
 
@@ -85,21 +85,21 @@ public interface Entity {
     void setAbstract_(String abstract_);
 
     /**
-     * Returns the list of the '<em><b>Attribute</b></em>' objects for an Entity.
-     * @return the list of the '<em>Attribute</em>' objects for an Entity.
+     * Returns the list of the '<em><b>AttributeImpl</b></em>' objects for an EntityImpl.
+     * @return the list of the '<em>AttributeImpl</em>' objects for an EntityImpl.
      */
     List<AttributeImpl> getAttributeImplList();
 
     /**
-     * Adds the '<em><b>Attribute</b></em>' object to the Attribute List and then returns the object
-     * @param attrTag the XmlTag for the current Attribute
-     * @return the '<em>Attribute</em>' object for the created Attribute
+     * Adds the '<em><b>AttributeImpl</b></em>' object to the AttributeImpl List and then returns the object
+     * @param attrTag the XmlTag for the current AttributeImpl
+     * @return the '<em>AttributeImpl</em>' object for the created AttributeImpl
      */
     AttributeImpl addAttribute(XmlTag attrTag);
 
     /**
-     * Returns the list of the '<em><b>ToOne</b></em>' objects for an Entity.
-     * @return the list of the '<em>ToOne</em>' objects for an Entity.
+     * Returns the list of the '<em><b>ToOne</b></em>' objects for an EntityImpl.
+     * @return the list of the '<em>ToOne</em>' objects for an EntityImpl.
      */
     List<ToOneImpl> getToOneImplList();
 

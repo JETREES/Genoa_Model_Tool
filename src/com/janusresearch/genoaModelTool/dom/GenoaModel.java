@@ -7,7 +7,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.xml.DomManager;
-import com.janusresearch.genoaModelTool.genoa.Model;
+import com.janusresearch.genoaModelTool.debug.Debug;
 import com.janusresearch.genoaModelTool.genoa.impl.*;
 
 import javax.swing.*;
@@ -19,8 +19,9 @@ import icons.*;
 
 @SuppressWarnings("ConstantConditions")
 public class GenoaModel {
+    private final Project project;
     private JTree myTree;
-    private Model model;
+    private com.janusresearch.genoaModelTool.genoa.Model model;
     private DefaultTreeModel myTreeModel;
     private final VirtualFile myFile;
     private final String fileName;
@@ -31,6 +32,7 @@ public class GenoaModel {
 
     public GenoaModel(Project project, VirtualFile file) {
         myFile = file;
+        this.project = project;
         filePath = file.getPath().substring(file.getPath().indexOf(project.getName()));
         fileName = file.getNameWithoutExtension();
 
@@ -46,41 +48,65 @@ public class GenoaModel {
     }
 
     private void buildTree(XmlTag rootTag){
-        this.model = new ModelImpl(rootTag);
-        GenoaObjectImpl test = new ModelImpl(rootTag);
-        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(model);
+//        this.model = new ModelImpl(project, rootTag);
+        GenoaObject myModel = new ModelImpl(project, rootTag);
+        if (test instanceof ModelImpl) {
+            Debug.print(((ModelImpl) test).getName());
+        }
+        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(myModel);
         myTreeModel = new DefaultTreeModel(rootTreeNode);
         myTree = new Tree(myTreeModel);
 
         CustomRenderer customRenderer = new CustomRenderer();
 
-        addChildren(rootTreeNode, rootTag);
+        addChildren(myModel, rootTreeNode, rootTag);
         myTree.setCellRenderer(customRenderer);
     }
 
-    private void addChildren(DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) {
+    private void addChildren(GenoaObject parentObj, DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) {
         XmlTag[] childTags = parentXmlTag.getSubTags();
         DefaultMutableTreeNode childTreeNode = null;
+        GenoaObject currentObj = null;
         for (XmlTag t : childTags) {
             switch(t.getName()) {
                 case GenoaXmlTags.NAME :
-                case "comment" :
-                case "description" :
-                case "destination" :
-                case "entityName" :
-                case "superEntityName" :
-                case "varName" :
+                case GenoaXmlTags.COMMENT :
+                case GenoaXmlTags.DESCRIPTION :
+                case GenoaXmlTags.DESTINATION :
+                case GenoaXmlTags.ENTITY_NAME :
+                case GenoaXmlTags.SUPER_ENTITY_NAME :
+                case GenoaXmlTags.VAR_NAME :
                     break;
-                case "entity" :
-                    childTreeNode = new DefaultMutableTreeNode(new EntityImpl(t));
+                case GenoaXmlTags.ENTITY :
+                    currentObj = ((ModelImpl) parentObj).addEntity(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
                     parentTreeNode.add(childTreeNode);
-                    addChildren(childTreeNode, t);
+                    addChildren(currentObj, childTreeNode, t);
                     break;
-                case "choices" :
+                case GenoaXmlTags.ATTRIBUTE :
+                    currentObj = ((EntityImpl) parentObj).addAttribute(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.CHOICES :
                     for (XmlTag c : t.getSubTags()) {
-                        DefaultMutableTreeNode choice = new DefaultMutableTreeNode(t);
+                        currentObj = ((AttributeImpl) parentObj).addChoice(c);
+                        DefaultMutableTreeNode choice = new DefaultMutableTreeNode(currentObj);
                         parentTreeNode.add(choice);
                     }
+                    break;
+                case GenoaXmlTags.TO_ONE :
+                    currentObj = ((EntityImpl) parentObj).addToOne(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.TO_MANY :
+                    currentObj = ((EntityImpl) parentObj).addToMany(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
                     break;
                 case "literal" :
                 case "variableRef1" :

@@ -81,15 +81,15 @@ public interface Model {
     void addImport(String import_);
 
     /**
-     * Returns the list of the '<em><b>Entity</b></em>' objects for a model.
-     * @return the list of the '<em>Entity</em>' objects for a model.
+     * Returns the list of the '<em><b>EntityImpl</b></em>' objects for a model.
+     * @return the list of the '<em>EntityImpl</em>' objects for a model.
      */
     List<EntityImpl> getEntityImplList();
 
     /**
-     * Adds the '<em><b>Entity</b></em>' object to the Entity List and then returns the object
-     * @param entityTag the XmlTag for the current Entity
-     * @return the '<em>Entity</em>' object for the created Entity
+     * Adds the '<em><b>EntityImpl</b></em>' object to the EntityImpl List and then returns the object
+     * @param entityTag the XmlTag for the current EntityImpl
+     * @return the '<em>EntityImpl</em>' object for the created EntityImpl
      */
     EntityImpl addEntity(XmlTag entityTag);
 
@@ -107,15 +107,15 @@ public interface Model {
     PrototypeImpl addPrototype(XmlTag prototypeTag);
 
     /**
-     * Returns the list of the '<em><b>Behavior</b></em>' objects for a model.
-     * @return the list of the '<em>Behavior</em>' objects for a model.
+     * Returns the list of the '<em><b>BehaviorImpl</b></em>' objects for a model.
+     * @return the list of the '<em>BehaviorImpl</em>' objects for a model.
      */
     List<BehaviorImpl> getBehaviorImplList();
 
     /**
-     * Adds the '<em><b>Behavior</b></em>' object to the Behavior List and then returns the object
-     * @param behaviorTag the XmlTag for the current Behavior
-     * @return the '<em>Behavior</em>' object for the created Behavior
+     * Adds the '<em><b>BehaviorImpl</b></em>' object to the BehaviorImpl List and then returns the object
+     * @param behaviorTag the XmlTag for the current BehaviorImpl
+     * @return the '<em>BehaviorImpl</em>' object for the created BehaviorImpl
      */
     BehaviorImpl addBehavior(XmlTag behaviorTag);
 }

@@ -2,10 +2,9 @@ package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
 import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
-import com.janusresearch.genoaModelTool.genoa.ToOne;
 
 @SuppressWarnings("ConstantConditions")
-public class ToOneImpl extends GenoaObjectImpl implements ToOne {
+public class ToOneImpl extends GenoaObject implements com.janusresearch.genoaModelTool.genoa.ToOne {
     private XmlTag toOneTag;
     private String name = "";
     private String description = "";
