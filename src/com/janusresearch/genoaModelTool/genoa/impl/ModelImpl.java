@@ -1,12 +1,14 @@
-package com.janusresearch.genoaModelTool.genoa;
+package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
+import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
+import com.janusresearch.genoaModelTool.genoa.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class ModelImpl implements Model {
+public class ModelImpl extends GenoaObjectImpl implements Model {
     private XmlTag modelTag;
     private String name = "";
     private String packageString = "";
@@ -19,10 +21,10 @@ public class ModelImpl implements Model {
 
     public ModelImpl(XmlTag xmlTag) {
         this.modelTag = xmlTag;
-        this.name = xmlTag.getSubTagText("name");
-        this.packageString = xmlTag.getSubTagText("packageString");
-        this.description = xmlTag.getSubTagText("description");
-        this.uri = xmlTag.getSubTagText("uri");
+        this.setName(xmlTag.getSubTagText(GenoaXmlTags.NAME));
+        this.setPackageString(xmlTag.getSubTagText(GenoaXmlTags.PACKAGE_STRING));
+        this.setDescription(xmlTag.getSubTagText(GenoaXmlTags.DESCRIPTION));
+        this.setUri(xmlTag.getSubTagText(GenoaXmlTags.URI));
         this.setImportList();
     }
 
@@ -36,7 +38,7 @@ public class ModelImpl implements Model {
 
     public void setName(String name) {
         this.name = name;
-        this.getModelTag().findFirstSubTag("name").getValue().setText(name);
+        this.getModelTag().findFirstSubTag(GenoaXmlTags.NAME).getValue().setText(name);
     }
 
     public String getPackageString() {
@@ -45,7 +47,7 @@ public class ModelImpl implements Model {
 
     public void setPackageString(String packageString) {
         this.packageString = packageString;
-        this.getModelTag().findFirstSubTag("packageString").getValue().setText(packageString);
+        this.getModelTag().findFirstSubTag(GenoaXmlTags.PACKAGE_STRING).getValue().setText(packageString);
     }
 
     public String getDescription() {
@@ -54,7 +56,7 @@ public class ModelImpl implements Model {
 
     public void setDescription(String description) {
         this.description = description;
-        this.getModelTag().findFirstSubTag("description").getValue().setText(description);
+        this.getModelTag().findFirstSubTag(GenoaXmlTags.DESCRIPTION).getValue().setText(description);
     }
 
     public String getUri() {
@@ -63,7 +65,7 @@ public class ModelImpl implements Model {
 
     public void setUri(String uri) {
         this.uri = uri;
-        this.getModelTag().findFirstSubTag("uri").getValue().setText(uri);
+        this.getModelTag().findFirstSubTag(GenoaXmlTags.URI).getValue().setText(uri);
     }
 
     public List<String> getImportList() {
@@ -71,8 +73,10 @@ public class ModelImpl implements Model {
     }
 
     public void setImportList() {
-        for (XmlTag x : getModelTag().findSubTags("import")) {
-            this.importList.add(x.getValue().getText());
+        for (XmlTag x : getModelTag().findSubTags(GenoaXmlTags.IMPORT)) {
+            if (x != null) {
+                this.addImport(x.getValue().getText());
+            }
         }
     }
 

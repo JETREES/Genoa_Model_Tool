@@ -1,6 +1,6 @@
 package icons;
 
-import com.janusresearch.genoaModelTool.genoa.EntityImpl;
+import com.janusresearch.genoaModelTool.genoa.impl.EntityImpl;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;

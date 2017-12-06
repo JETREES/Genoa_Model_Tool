@@ -1,12 +1,14 @@
-package com.janusresearch.genoaModelTool.genoa;
+package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
+import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
+import com.janusresearch.genoaModelTool.genoa.Attribute;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class AttributeImpl {
+public class AttributeImpl extends GenoaObjectImpl implements Attribute {
     private XmlTag attrTag;
     private String name = "";
     private String typeName = "";
@@ -19,17 +21,17 @@ public class AttributeImpl {
     public AttributeImpl() {
         this.setName("Attribute");
         this.setTypeName("String");
-        updateAttrNodeText();
+        updateNodeText();
     }
 
     public AttributeImpl(XmlTag xmlTag) {
         this.attrTag = xmlTag;
-        this.setName(xmlTag.getSubTagText("name"));
-        this.setTypeName(xmlTag.getAttribute("typeName").getValue());
-        this.setDescription(xmlTag.getSubTagText("description"));
-        this.setSource(xmlTag.getSubTagText("source"));
-        this.setTarget(xmlTag.getSubTagText("target"));
-        updateAttrNodeText();
+        this.setName(xmlTag.getSubTagText(GenoaXmlTags.NAME));
+        this.setTypeName(xmlTag.getAttribute(GenoaXmlTags.TYPE_NAME).getValue());
+        this.setDescription(xmlTag.getSubTagText(GenoaXmlTags.DESCRIPTION));
+        this.setSource(xmlTag.getSubTagText(GenoaXmlTags.SOURCE));
+        this.setTarget(xmlTag.getSubTagText(GenoaXmlTags.TARGET));
+        updateNodeText();
     }
 
     public XmlTag getAttrTag() {
@@ -40,26 +42,26 @@ public class AttributeImpl {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        this.getAttrTag().findFirstSubTag("name").getValue().setText(name);
-        this.updateAttrNodeText();
+        this.getAttrTag().findFirstSubTag(GenoaXmlTags.NAME).getValue().setText(name);
+        this.updateNodeText();
     }
 
     public String getTypeName() {
         return typeName;
     }
 
-    private void setTypeName(String typeName) {
+    public void setTypeName(String typeName) {
         this.typeName = typeName;
-        this.getAttrTag().setAttribute("typeName", typeName);
+        this.getAttrTag().setAttribute(GenoaXmlTags.TYPE_NAME, typeName);
     }
 
     public String getNodeText() {
         return nodeText;
     }
 
-    private void updateAttrNodeText() {
+    public void updateNodeText() {
         this.nodeText = getName();
     }
 
@@ -69,7 +71,7 @@ public class AttributeImpl {
 
     public void setDescription(String description) {
         this.description = description;
-        this.getAttrTag().findFirstSubTag("description").getValue().setText(description);
+        this.getAttrTag().findFirstSubTag(GenoaXmlTags.DESCRIPTION).getValue().setText(description);
     }
 
     public String getSource() {
@@ -78,7 +80,7 @@ public class AttributeImpl {
 
     public void setSource(String source) {
         this.source = source;
-        this.getAttrTag().findFirstSubTag("source").getValue().setText(source);
+        this.getAttrTag().findFirstSubTag(GenoaXmlTags.SOURCE).getValue().setText(source);
     }
 
     public String getTarget() {
@@ -87,7 +89,7 @@ public class AttributeImpl {
 
     public void setTarget(String target) {
         this.target = target;
-        this.getAttrTag().findFirstSubTag("target").getValue().setText(target);
+        this.getAttrTag().findFirstSubTag(GenoaXmlTags.TARGET).getValue().setText(target);
     }
 
     public List<ChoicesImpl> getChoicesImplList() {

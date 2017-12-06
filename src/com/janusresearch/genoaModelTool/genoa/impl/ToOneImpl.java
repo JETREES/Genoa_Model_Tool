@@ -1,9 +1,11 @@
-package com.janusresearch.genoaModelTool.genoa;
+package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
+import com.janusresearch.genoaModelTool.dom.GenoaXmlTags;
+import com.janusresearch.genoaModelTool.genoa.ToOne;
 
 @SuppressWarnings("ConstantConditions")
-public class ToOneImpl {
+public class ToOneImpl extends GenoaObjectImpl implements ToOne {
     private XmlTag toOneTag;
     private String name = "";
     private String description = "";
@@ -16,22 +18,22 @@ public class ToOneImpl {
     private String nodeText = "";
 
     public ToOneImpl() {
-        this.setName("toOne");
+        this.setName("To One");
         this.setAuto("true");
-        updateToOneNodeText();
+        updateNodeText();
     }
 
     public ToOneImpl(XmlTag xmlTag) {
         this.toOneTag = xmlTag;
-        this.setName(xmlTag.getSubTagText("name"));
-        this.setDescription(xmlTag.getSubTagText("description"));
-        this.setComment(xmlTag.getSubTagText("comment"));
-        this.setTransient_(xmlTag.getSubTagText("transient"));
-        this.setDestination(xmlTag.getSubTagText("destination"));
-        this.setInversePath(xmlTag.getSubTagText("inversePath"));
-        this.setAuto(xmlTag.getSubTagText("auto"));
-        this.setBindable(xmlTag.getSubTagText("bindable"));
-        updateToOneNodeText();
+        this.setName(xmlTag.getSubTagText(GenoaXmlTags.NAME));
+        this.setDescription(xmlTag.getSubTagText(GenoaXmlTags.DESCRIPTION));
+        this.setComment(xmlTag.getSubTagText(GenoaXmlTags.COMMENT));
+        this.setTransient_(xmlTag.getSubTagText(GenoaXmlTags.TRANSIENT));
+        this.setDestination(xmlTag.getSubTagText(GenoaXmlTags.DESTINATION));
+        this.setInversePath(xmlTag.getSubTagText(GenoaXmlTags.INVERSE_PATH));
+        this.setAuto(xmlTag.getSubTagText(GenoaXmlTags.AUTO));
+        this.setBindable(xmlTag.getSubTagText(GenoaXmlTags.BINDABLE));
+        updateNodeText();
     }
 
     public XmlTag getToOneTag() {
@@ -44,8 +46,8 @@ public class ToOneImpl {
 
     public void setName(String name) {
         this.name = name;
-        this.getToOneTag().findFirstSubTag("name").getValue().setText(name);
-        this.updateToOneNodeText();
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.NAME).getValue().setText(name);
+        this.updateNodeText();
     }
 
     public String getDescription() {
@@ -54,7 +56,7 @@ public class ToOneImpl {
 
     public void setDescription(String description) {
         this.description = description;
-        this.getToOneTag().findFirstSubTag("description").getValue().setText(description);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.DESCRIPTION).getValue().setText(description);
     }
 
     public String getComment() {
@@ -63,7 +65,7 @@ public class ToOneImpl {
 
     public void setComment(String comment) {
         this.comment = comment;
-        this.getToOneTag().findFirstSubTag("comment").getValue().setText(comment);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.COMMENT).getValue().setText(comment);
     }
 
     public String getTransient_() {
@@ -72,7 +74,7 @@ public class ToOneImpl {
 
     public void setTransient_(String transient_) {
         this.transient_ = transient_;
-        this.getToOneTag().findFirstSubTag("transient").getValue().setText(transient_);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.TRANSIENT).getValue().setText(transient_);
     }
 
     public String getDestination() {
@@ -81,7 +83,7 @@ public class ToOneImpl {
 
     public void setDestination(String destination) {
         this.destination = destination;
-        this.getToOneTag().findFirstSubTag("destination").getValue().setText(destination);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.DESTINATION).getValue().setText(destination);
     }
 
     public String getInversePath() {
@@ -90,7 +92,7 @@ public class ToOneImpl {
 
     public void setInversePath(String inversePath) {
         this.inversePath = inversePath;
-        this.getToOneTag().findFirstSubTag("inversePath").getValue().setText(inversePath);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.INVERSE_PATH).getValue().setText(inversePath);
     }
 
     public String getAuto() {
@@ -99,7 +101,7 @@ public class ToOneImpl {
 
     public void setAuto(String auto) {
         this.auto = auto;
-        this.getToOneTag().findFirstSubTag("auto").getValue().setText(auto);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.AUTO).getValue().setText(auto);
     }
 
     public String getBindable() {
@@ -108,14 +110,14 @@ public class ToOneImpl {
 
     public void setBindable(String bindable) {
         this.bindable = bindable;
-        this.getToOneTag().findFirstSubTag("bindable").getValue().setText(bindable);
+        this.getToOneTag().findFirstSubTag(GenoaXmlTags.BINDABLE).getValue().setText(bindable);
     }
 
     public String getNodeText() {
         return nodeText;
     }
 
-    private void updateToOneNodeText() {
+    public void updateNodeText() {
         this.nodeText = getName();
     }
 }

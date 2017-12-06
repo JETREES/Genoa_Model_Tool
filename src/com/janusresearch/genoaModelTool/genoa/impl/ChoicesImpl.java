@@ -1,21 +1,22 @@
-package com.janusresearch.genoaModelTool.genoa;
+package com.janusresearch.genoaModelTool.genoa.impl;
 
 import com.intellij.psi.xml.XmlTag;
+import com.janusresearch.genoaModelTool.genoa.Choices;
 
-public class ChoicesImpl {
+public class ChoicesImpl extends GenoaObjectImpl implements Choices{
     private XmlTag valueTag;
-    private String name = "";
+    private String value = "";
     private String nodeText = "";
 
     public ChoicesImpl() {
         this.setName("Choice");
-        updateChoiceNodeText();
+        updateNodeText();
     }
 
     public ChoicesImpl(XmlTag value) {
         this.valueTag = value;
         this.setName(value.getText());
-        updateChoiceNodeText();
+        updateNodeText();
     }
 
     public XmlTag getValueTag() {
@@ -23,20 +24,21 @@ public class ChoicesImpl {
     }
 
     public String getName() {
-        return name;
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        this.getValueTag().getValue().setText(name);
-        this.updateChoiceNodeText();
+    public void setName(String value) {
+        this.value = value;
+        this.getValueTag().getValue().setText(value);
+        this.updateNodeText();
     }
 
     public String getNodeText() {
         return nodeText;
     }
 
-    private void updateChoiceNodeText() {
+    public void updateNodeText() {
         this.nodeText = getName();
     }
+
 }
