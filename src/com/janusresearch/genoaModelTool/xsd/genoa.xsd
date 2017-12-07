@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            >
+  <xsd:element name="model" type="Model">
+    <xsd:unique name="uniqueEntityName">
+      <xsd:selector xpath="entity"/>
+      <xsd:field xpath="name"/>
+    </xsd:unique>
+    <xsd:unique name="uniquePrototypeName">
+      <xsd:selector xpath="prototype"/>
+      <xsd:field xpath="name"/>
+    </xsd:unique>
+  </xsd:element>
+
+  <xsd:complexType name="Model">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="packageString">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="uri" type="xsd:anyURI"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="import">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="entity" type="Entity"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="prototype" type="Prototype"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="behavior" type="Behavior"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Entity">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:ID">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="abstract" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="superEntityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="attr" type="Attribute"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="toOne" type="ToOne"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="toMany" type="ToMany"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="toManyMap" type="ToManyMap"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="toManyList" type="ToManyList"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="alias" type="Alias"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Attribute">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="choices" type="Choices"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="source" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="target" type="xsd:boolean"/>
+    </xsd:sequence>
+    <xsd:attribute default="String" name="typeName">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="int"/>
+          <xsd:enumeration value="float"/>          
+          <xsd:enumeration value="boolean"/>
+          <xsd:enumeration value="String"/>
+          <xsd:enumeration value="Object"/>
+          <xsd:enumeration value="long"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="Choices">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="value" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ToOne">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element name="destination">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="inversePath">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="auto" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="bindable" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ToMany">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element name="destination">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="inversePath">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ToManyMap">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element name="destination">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="inversePath">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="destinationKey">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Alias">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="source" type="xsd:boolean"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="target" type="xsd:boolean"/>
+      <xsd:element name="aliasPropertyPath" type="xsd:token"/>
+    </xsd:sequence>
+    <xsd:attribute default="String" name="typeName">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="int"/>
+          <xsd:enumeration value="float"/>          
+          <xsd:enumeration value="boolean"/>
+          <xsd:enumeration value="String"/>
+          <xsd:enumeration value="Object"/>
+          <xsd:enumeration value="long"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="Prototype">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="entityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="singleton" type="xsd:boolean"/>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="attributeSetting" type="AttributeSetting"/>
+        <xsd:element name="relationshipSetting" type="RelationshipSetting"/>
+        <xsd:element name="toManySetting" type="ToManySetting"/>
+        <xsd:element name="toManyListSetting" type="ToManyListSetting"/>
+        <xsd:element name="propertyPathSetting" type="PropertyPathSetting"/>       
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AttributeSetting">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element name="value" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RelationshipSetting">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element name="prototypeRef" type="xsd:token"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ToManySetting">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="prototypeRef" type="xsd:token"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+   <xsd:complexType name="ToManyListSetting">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="prototypeRef" type="xsd:token"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PropertyPathSetting">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element name="sourcePropertyPath" type="xsd:token"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Behavior">
+    <xsd:sequence>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="factPattern" type="FactPattern"/>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="setProperty" type="SetProperty"/>
+        <xsd:element name="instantiation" type="Instantiation"/>
+        <xsd:element name="assignment" type="Assignment"/>
+        <xsd:element name="message" type="Message"/>
+        <xsd:element name="addToCollection" type="AddToCollection"/>
+        <xsd:element name="removeFromCollection" type="RemoveFromCollection"/>
+        <xsd:element name="retractBean" type="RetractBean"/>
+        <xsd:element name="clearCollection" type="ClearCollection"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="salience" type="xsd:integer"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="FactPattern">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="entityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="clause" type="Clause"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="propertyBinding" type="PropertyBinding"/>
+    </xsd:sequence>
+    <xsd:attribute name="notExists" type="xsd:boolean"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="Clause">
+    <xsd:annotation> <xsd:appinfo >ClauseMustHaveTwoChildren</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="literal" type="Literal"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+        <xsd:element name="null" type="Null"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute default="eq" name="operator">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="eq"/>
+          <xsd:enumeration value="neq"/>
+          <xsd:enumeration value="gt"/>
+          <xsd:enumeration value="gteq"/>
+          <xsd:enumeration value="lt"/>
+          <xsd:enumeration value="lteq"/>
+          <xsd:enumeration value="matches"/>
+          <xsd:enumeration value="notMatches"/>
+          <xsd:enumeration value="and"/>
+          <xsd:enumeration value="not"/>
+          <xsd:enumeration value="or"/>
+          <xsd:enumeration value="subtract"/>
+          <xsd:enumeration value="add"/>
+          <xsd:enumeration value="divide"/>
+          <xsd:enumeration value="modulo"/>
+          <xsd:enumeration value="multiply"/>
+          <xsd:enumeration value="concat"/>
+          <xsd:enumeration value="substring"/>
+          <xsd:enumeration value="format"/>
+          <xsd:enumeration value="parseInt"/>
+          <xsd:enumeration value="parseFloat"/>
+          <xsd:enumeration value="indexOf"/>
+          <xsd:enumeration value="lastIndexOf"/>
+          <xsd:enumeration value="contains"/>
+          <xsd:enumeration value="notContains"/>
+          <xsd:enumeration value="memberOf"/>
+          <xsd:enumeration value="notMemberOf"/>
+          <xsd:enumeration value="in"/>
+          <xsd:enumeration value="notIn"/>
+          <xsd:enumeration value="indexOfCollection"/>
+          <xsd:enumeration value="getElementAtIndex"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="ParamPropertyPath">
+    <xsd:sequence>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="entityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute default="String" name="typeName">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="int"/>
+          <xsd:enumeration value="float"/>          
+          <xsd:enumeration value="boolean"/>
+          <xsd:enumeration value="String"/>
+          <xsd:enumeration value="Object"/>
+          <xsd:enumeration value="long"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="GetProperty">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef" type="VariableRef"/>
+      <xsd:choice>
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="VariableRef">
+    <xsd:sequence>
+      <xsd:element name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PropertyPath">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:token"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="Literal">
+    <xsd:sequence>
+      <xsd:element name="value" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute default="String" name="typeName">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="int"/>
+          <xsd:enumeration value="float"/>          
+          <xsd:enumeration value="boolean"/>
+          <xsd:enumeration value="String"/>
+          <xsd:enumeration value="Object"/>
+          <xsd:enumeration value="ListString"/>
+          <xsd:enumeration value="long"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="Null">
+    <xsd:simpleContent>
+      <xsd:extension base="emptyString"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="PropertyBinding">
+    <xsd:annotation> <xsd:appinfo >PropertyBindingChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="entityVariable" type="EntityVariable"/>
+        <xsd:element name="variable" type="SimpleVariable"/>
+      </xsd:choice>
+      <xsd:element name="propertyPath" type="PropertyPath"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="EntityVariable">
+    <xsd:sequence>
+      <xsd:element name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="entityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="SimpleVariable">
+    <xsd:sequence>
+      <xsd:element name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute default="String" name="typeName">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:token">
+          <xsd:enumeration value="int"/>
+          <xsd:enumeration value="float"/>          
+          <xsd:enumeration value="boolean"/>
+          <xsd:enumeration value="String"/>
+          <xsd:enumeration value="Object"/>
+          <xsd:enumeration value="long"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="SetProperty">
+    <xsd:annotation> <xsd:appinfo>LimitOneChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef1" type="VariableRef1"/>
+      <xsd:choice>
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="literal" type="Literal"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+        <xsd:element name="null" type="Null"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="VariableRef1">
+    <xsd:sequence>
+      <xsd:element name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Instantiation">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="entityName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="varName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[$][a-z][_a-zA-Z0-9]*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Assignment">
+    <xsd:annotation> <xsd:appinfo >AssignmentChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:choice>
+        <xsd:element name="entityVariable" type="EntityVariable"/>
+        <xsd:element name="variable" type="SimpleVariable"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="literal" type="Literal"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+        <xsd:element name="null" type="Null"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Message">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="literal" type="Literal"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+        <xsd:element name="null" type="Null"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ToManyList">
+    <xsd:sequence>
+      <xsd:element name="name">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-z]+(|[0-9a-z_][_a-zA-Z0-9]*)"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element maxOccurs="1" minOccurs="0" name="transient" type="xsd:boolean"/>
+      <xsd:element name="destination">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[A-Z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="inversePath">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="\s*|[a-z][_a-zA-Z0-9]*([.][_a-zA-Z0-9]+)*"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddToCollection">
+    <xsd:annotation> <xsd:appinfo >LimitOneChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef1" type="VariableRef1"/>
+      <xsd:choice>
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ClearCollection">
+    <xsd:annotation> <xsd:appinfo >LimitOneChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef1" type="VariableRef1"/>
+      <xsd:choice>
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RemoveFromCollection">
+    <xsd:annotation> <xsd:appinfo >LimitOneChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef1" type="VariableRef1"/>
+      <xsd:choice>
+        <xsd:element name="paramPropertyPath" type="ParamPropertyPath"/>
+        <xsd:element name="propertyPath" type="PropertyPath"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="getProperty" type="GetProperty"/>
+        <xsd:element name="clause" type="Clause"/>
+        <xsd:element name="variableRef" type="VariableRef"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RetractBean">
+    <xsd:annotation> <xsd:appinfo >LimitOneChoice</xsd:appinfo> </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="comment" type="xsd:string"/>
+      <xsd:element name="variableRef1" type="VariableRef1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="emptyString">
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="collapse"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>
