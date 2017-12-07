@@ -28,6 +28,7 @@ public interface GenoaXmlTags {
     String PACKAGE_STRING = "packageString";
     String PARAM_PROPERTY_PATH = "paramPropertyPath";
     String PROPERTY_PATH = "propertyPath";
+    String PROPERTY_PATH_SETTING = "propertyPathSetting";
     String PROTOTYPE = "prototype";
     String PROTOTYPE_REF = "prototypeRef";
     String RELATIONSHIP_SETTING = "relationshipSetting";
@@ -49,4 +50,5 @@ public interface GenoaXmlTags {
     String VARIABLE_REF1 = "variableRef1";
     String DESTINATION_KEY = "destinationKey";
     String ALIAS_PROPERTY_PATH = "aliasPropertyPath";
+    String TO_MANY_SETTING = "toManySetting";
 }

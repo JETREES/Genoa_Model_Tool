@@ -124,6 +124,60 @@ public class GenoaModel {
                     parentTreeNode.add(childTreeNode);
                     addChildren(currentObj, childTreeNode, t);
                     break;
+                case GenoaXmlTags.PROTOTYPE :
+                    currentObj = ((ModelImpl) parentObj).addPrototype(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.ATTRIBUTE_SETTING :
+                    currentObj = ((PrototypeImpl) parentObj).addAttributeSetting(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.PROPERTY_PATH_SETTING :
+                    currentObj = ((PrototypeImpl) parentObj).addPropertyPathSetting(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.RELATIONSHIP_SETTING :
+                    currentObj = ((PrototypeImpl) parentObj).addRelationshipSetting(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.TO_MANY_LIST_SETTING :
+                    currentObj = ((PrototypeImpl) parentObj).addToManyListSetting(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.TO_MANY_SETTING :
+                    currentObj = ((PrototypeImpl) parentObj).addToManySetting(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.VALUE :
+                    currentObj = ((PrototypeImpl) parentObj).addValue(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.SOURCE_PROPERTY_PATH :
+                    currentObj = ((PrototypeImpl) parentObj).addSourcePropertyPath(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
+                case GenoaXmlTags.PROTOTYPE_REF :
+                    currentObj = ((PrototypeImpl) parentObj).addSourcePropertyPath(t);
+                    childTreeNode = new DefaultMutableTreeNode(currentObj);
+                    parentTreeNode.add(childTreeNode);
+                    addChildren(currentObj, childTreeNode, t);
+                    break;
                 case "literal" :
                 case "variableRef1" :
                     childTreeNode = new DefaultMutableTreeNode(t);
