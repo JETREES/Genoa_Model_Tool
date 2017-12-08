@@ -12,11 +12,14 @@ import com.intellij.ui.content.ContentFactory;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import com.janusresearch.genoaModelTool.dom.GenoaModel;
+import com.janusresearch.genoaModelTool.jaxb.ObjectFactory;
 import icons.GenoaIcons;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import java.awt.*;
 import java.util.Objects;
 
@@ -24,8 +27,15 @@ public class GenoaEditor implements ToolWindowFactory {
     private JPanel genoaToolWindowContent;
     private JBTabbedPane genoaTabbedPane;
     private FileEditorManager mySource;
+    private JAXBContext jaxbContext;
 
     public GenoaEditor(Project project) {
+
+        try {
+            jaxbContext = JAXBContext.newInstance("com.janusresearch.genoaModelTool.jaxb", ObjectFactory.class.getClassLoader());
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         MessageBus messageBus = project.getMessageBus();
         MessageBusConnection connection = messageBus.connect();
         connection.subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerListener() {
@@ -34,7 +44,7 @@ public class GenoaEditor implements ToolWindowFactory {
             public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
                 if (Objects.equals(file.getExtension(), "genoa")) {
                     mySource = source;
-                        loadModel(new GenoaModel(project, file));
+                        loadModel(new GenoaModel(project, file, jaxbContext));
                 }
             }
 
@@ -79,9 +89,9 @@ public class GenoaEditor implements ToolWindowFactory {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setName(genoaModel.getFileName());
-        panel.add(genoaModel.getMyTree());
+        panel.add(genoaModel.getTree());
         getGenoaTabbedPane().add(panel);
-        getGenoaTabbedPane().setTabComponentAt(getGenoaTabbedPane().indexOfComponent(panel), createTitlePanel(getGenoaTabbedPane(), panel, genoaModel.getFileName(), genoaModel.getMyFile()));
+        getGenoaTabbedPane().setTabComponentAt(getGenoaTabbedPane().indexOfComponent(panel), createTitlePanel(getGenoaTabbedPane(), panel, genoaModel.getFileName(), genoaModel.getFile()));
         getGenoaTabbedPane().setToolTipTextAt(getGenoaTabbedPane().indexOfComponent(panel), genoaModel.getFilePath());
     }
 
