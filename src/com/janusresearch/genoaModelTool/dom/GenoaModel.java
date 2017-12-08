@@ -1,30 +1,25 @@
 package com.janusresearch.genoaModelTool.dom;
 
+import com.intellij.debugger.requests.Requestor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.treeStructure.Tree;
-import com.intellij.util.xml.DomManager;
 import com.janusresearch.genoaModelTool.genoa.impl.*;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLEventReader;
-import java.io.IOException;
-import java.util.Objects;
+import javax.xml.bind.*;
+import java.io.*;
 
+import com.janusresearch.genoaModelTool.xsd.Behavior;
 import com.janusresearch.genoaModelTool.xsd.Model;
 import com.janusresearch.genoaModelTool.xsd.ObjectFactory;
 import icons.*;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions"})
 public class GenoaModel {
     private final Project project;
     private JTree myTree;
@@ -42,15 +37,19 @@ public class GenoaModel {
 //        DomManager manager = DomManager.getDomManager(project);
 
         //Get PsiFile from VirtualFile and cast that to XmlFile
-        XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(file);
+//        XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(file);
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance("com.janusresearch.genoaModelTool.xsd", ObjectFactory.class.getClassLoader());
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement<Model> modelElement = (JAXBElement<Model>) unmarshaller.unmarshal(file.getInputStream());
-            Model model = modelElement.getValue();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            JAXBContext jc = JAXBContext.newInstance("com.janusresearch.genoaModelTool.xsd", ObjectFactory.class.getClassLoader());
+            Unmarshaller um = jc.createUnmarshaller();
+            InputStream is = file.getInputStream();
+            JAXBElement<?> modelElement = (JAXBElement<?>) um.unmarshal(is);
+            Model model = (Model) modelElement.getValue();
+            Marshaller m = jc.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            OutputStreamWriter osw = new OutputStreamWriter(file.getOutputStream(null));
+            m.marshal(model, osw);
+            osw.close();
+        } catch (JAXBException | IOException e) {
             e.printStackTrace();
         }
         //Get the GenoaRoot File Element
@@ -60,18 +59,18 @@ public class GenoaModel {
 
     private void buildTree(XmlTag rootTag){
 //        this.model = new ModelImpl(project, rootTag);
-        GenoaObject myModel = new ModelImpl(project, rootTag);
+//        GenoaObject myModel = new ModelImpl(project, rootTag);
         /*if (test instanceof ModelImpl) {
             Debug.print(((ModelImpl) test).getName());
         }*/
-        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(myModel);
-        DefaultTreeModel myTreeModel = new DefaultTreeModel(rootTreeNode);
-        myTree = new Tree(myTreeModel);
+//        DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode(myModel);
+//        DefaultTreeModel myTreeModel = new DefaultTreeModel(rootTreeNode);
+//        myTree = new Tree(myTreeModel);
 
-        CustomRenderer customRenderer = new CustomRenderer();
+//        CustomRenderer customRenderer = new CustomRenderer();
 
-        addChildren(myModel, rootTreeNode, rootTag);
-        myTree.setCellRenderer(customRenderer);
+//        addChildren(myModel, rootTreeNode, rootTag);
+//        myTree.setCellRenderer(customRenderer);
     }
 
     private void addChildren(GenoaObject parentObj, DefaultMutableTreeNode parentTreeNode, XmlTag parentXmlTag) {
