@@ -23,6 +23,17 @@ import javax.xml.namespace.QName;
  */
 @XmlRegistry
 public class ObjectFactory {
+    Model model;
+        /*try {
+        JAXBContext jaxbContext = JAXBContext.newInstance("com.janusresearch.genoaModelTool.xsd", ObjectFactory.class.getClassLoader());
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        JAXBElement<Model> modelElement = (JAXBElement<Model>) unmarshaller.unmarshal(file.getInputStream());
+        model = modelElement.getValue();
+    } catch (JAXBException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }*/
 
     private final static QName _Model_QNAME = new QName("", "model");
 

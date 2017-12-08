@@ -12,21 +12,25 @@ import com.janusresearch.genoaModelTool.genoa.impl.*;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLEventReader;
+import java.io.IOException;
 import java.util.Objects;
 
+import com.janusresearch.genoaModelTool.xsd.Model;
+import com.janusresearch.genoaModelTool.xsd.ObjectFactory;
 import icons.*;
 
 @SuppressWarnings("ConstantConditions")
 public class GenoaModel {
     private final Project project;
     private JTree myTree;
-    private com.janusresearch.genoaModelTool.genoa.Model model;
     private final VirtualFile myFile;
     private final String fileName;
     private final String filePath;
-    private EntityImpl currentEntity;
-    private PrototypeImpl currentPrototype;
-    private BehaviorImpl currentBehavior;
 
     public GenoaModel(Project project, VirtualFile file) {
         myFile = file;
@@ -35,14 +39,23 @@ public class GenoaModel {
         fileName = file.getNameWithoutExtension();
 
         //Create DomManager, FileDescription and register the description
-        DomManager manager = DomManager.getDomManager(project);
+//        DomManager manager = DomManager.getDomManager(project);
 
         //Get PsiFile from VirtualFile and cast that to XmlFile
         XmlFile xmlFile = (XmlFile) PsiManager.getInstance(project).findFile(file);
-
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance("com.janusresearch.genoaModelTool.xsd", ObjectFactory.class.getClassLoader());
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            JAXBElement<Model> modelElement = (JAXBElement<Model>) unmarshaller.unmarshal(file.getInputStream());
+            Model model = modelElement.getValue();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //Get the GenoaRoot File Element
-        XmlTag genoaRoot = manager.getFileElement(xmlFile, GenoaRoot.class).getRootElement().getXmlTag();
-        buildTree(genoaRoot);
+//        XmlTag genoaRoot = manager.getFileElement(xmlFile, GenoaRoot.class).getRootElement().getXmlTag();
+//        buildTree(genoaRoot);
     }
 
     private void buildTree(XmlTag rootTag){
@@ -65,7 +78,7 @@ public class GenoaModel {
         XmlTag[] childTags = parentXmlTag.getSubTags();
         DefaultMutableTreeNode childTreeNode = null;
         GenoaObject currentObj;
-        for (XmlTag t : childTags) {
+        /*for (XmlTag t : childTags) {
             switch(t.getName()) {
                 case GenoaXmlTags.NAME :
                 case GenoaXmlTags.COMMENT :
@@ -209,7 +222,7 @@ public class GenoaModel {
                     parentTreeNode.add(childTreeNode);
                     break;
             }
-        }
+        }*/
     }
 
 

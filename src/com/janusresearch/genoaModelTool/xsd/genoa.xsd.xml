@@ -1,0 +1,564 @@
+<model>
+  <name>token</name>
+  <!--Optional:-->
+  <description>string</description>
+  <!--Optional:-->
+  <comment>string</comment>
+  <packageString>token</packageString>
+  <!--Optional:-->
+  <uri>http://www.company.org/cum/sonoras</uri>
+  <!--Zero or more repetitions:-->
+  <import>token</import>
+  <!--Zero or more repetitions:-->
+  <entity>
+    <name>string</name>
+    <!--Optional:-->
+    <description>string</description>
+    <!--Optional:-->
+    <comment>string</comment>
+    <!--Optional:-->
+    <abstract>true</abstract>
+    <!--Optional:-->
+    <superEntityName>token</superEntityName>
+    <!--Zero or more repetitions:-->
+    <attr typeName="String">
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>true</transient>
+      <!--Optional:-->
+      <choices>
+        <!--Zero or more repetitions:-->
+        <value>string</value>
+      </choices>
+      <!--Optional:-->
+      <source>true</source>
+      <!--Optional:-->
+      <target>false</target>
+    </attr>
+    <!--Zero or more repetitions:-->
+    <toOne>
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>false</transient>
+      <destination>token</destination>
+      <!--Optional:-->
+      <inversePath>token</inversePath>
+      <!--Optional:-->
+      <auto>false</auto>
+      <!--Optional:-->
+      <bindable>true</bindable>
+    </toOne>
+    <!--Zero or more repetitions:-->
+    <toMany>
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>true</transient>
+      <destination>token</destination>
+      <!--Optional:-->
+      <inversePath>token</inversePath>
+    </toMany>
+    <!--Zero or more repetitions:-->
+    <toManyMap>
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>false</transient>
+      <destination>token</destination>
+      <!--Optional:-->
+      <inversePath>token</inversePath>
+      <destinationKey>token</destinationKey>
+    </toManyMap>
+    <!--Zero or more repetitions:-->
+    <toManyList>
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>true</transient>
+      <destination>token</destination>
+      <!--Optional:-->
+      <inversePath>token</inversePath>
+    </toManyList>
+    <!--Zero or more repetitions:-->
+    <alias typeName="String">
+      <name>token</name>
+      <!--Optional:-->
+      <description>string</description>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--Optional:-->
+      <transient>false</transient>
+      <!--Optional:-->
+      <source>false</source>
+      <!--Optional:-->
+      <target>false</target>
+      <aliasPropertyPath>token</aliasPropertyPath>
+    </alias>
+  </entity>
+  <!--Zero or more repetitions:-->
+  <prototype>
+    <name>token</name>
+    <entityName>token</entityName>
+    <!--Optional:-->
+    <singleton>false</singleton>
+    <!--You have a CHOICE of the next 5 items at this level-->
+    <attributeSetting>
+      <propertyPath>token</propertyPath>
+      <value>string</value>
+    </attributeSetting>
+    <relationshipSetting>
+      <propertyPath>token</propertyPath>
+      <prototypeRef>token</prototypeRef>
+    </relationshipSetting>
+    <toManySetting>
+      <propertyPath>token</propertyPath>
+      <!--Zero or more repetitions:-->
+      <prototypeRef>token</prototypeRef>
+    </toManySetting>
+    <toManyListSetting>
+      <propertyPath>token</propertyPath>
+      <!--Zero or more repetitions:-->
+      <prototypeRef>token</prototypeRef>
+    </toManyListSetting>
+    <propertyPathSetting>
+      <propertyPath>token</propertyPath>
+      <sourcePropertyPath>token</sourcePropertyPath>
+    </propertyPathSetting>
+  </prototype>
+  <!--Zero or more repetitions:-->
+  <behavior salience="100">
+    <description>string</description>
+    <!--Optional:-->
+    <comment>string</comment>
+    <!--Zero or more repetitions:-->
+    <factPattern notExists="false">
+      <!--Optional:-->
+      <comment>string</comment>
+      <entityName>token</entityName>
+      <!--Optional:-->
+      <varName>token</varName>
+      <!--Zero or more repetitions:-->
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <!--Zero or more repetitions:-->
+      <propertyBinding>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <entityVariable>
+          <varName>token</varName>
+          <entityName>token</entityName>
+        </entityVariable>
+        <variable typeName="String">
+          <varName>token</varName>
+        </variable>
+        <propertyPath>token</propertyPath>
+      </propertyBinding>
+    </factPattern>
+    <!--You have a CHOICE of the next 8 items at this level-->
+    <setProperty>
+      <!--Optional:-->
+      <comment>string</comment>
+      <variableRef1>
+        <varName>token</varName>
+      </variableRef1>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <paramPropertyPath typeName="String">
+        <propertyPath>token</propertyPath>
+        <!--Optional:-->
+        <entityName>token</entityName>
+      </paramPropertyPath>
+      <propertyPath>token</propertyPath>
+      <!--You have a CHOICE of the next 5 items at this level-->
+      <getProperty>
+        <!--Optional:-->
+        <comment>string</comment>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <propertyPath>token</propertyPath>
+      </getProperty>
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <literal typeName="String">
+        <value>string</value>
+      </literal>
+      <variableRef>
+        <varName>token</varName>
+      </variableRef>
+      <null>string</null>
+    </setProperty>
+    <instantiation>
+      <!--Optional:-->
+      <comment>string</comment>
+      <entityName>token</entityName>
+      <varName>token</varName>
+    </instantiation>
+    <assignment>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <entityVariable>
+        <varName>token</varName>
+        <entityName>token</entityName>
+      </entityVariable>
+      <variable typeName="String">
+        <varName>token</varName>
+      </variable>
+      <!--You have a CHOICE of the next 5 items at this level-->
+      <getProperty>
+        <!--Optional:-->
+        <comment>string</comment>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <propertyPath>token</propertyPath>
+      </getProperty>
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <literal typeName="String">
+        <value>string</value>
+      </literal>
+      <variableRef>
+        <varName>token</varName>
+      </variableRef>
+      <null>string</null>
+    </assignment>
+    <message>
+      <!--Optional:-->
+      <comment>string</comment>
+      <!--You have a CHOICE of the next 7 items at this level-->
+      <paramPropertyPath typeName="String">
+        <propertyPath>token</propertyPath>
+        <!--Optional:-->
+        <entityName>token</entityName>
+      </paramPropertyPath>
+      <getProperty>
+        <!--Optional:-->
+        <comment>string</comment>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <propertyPath>token</propertyPath>
+      </getProperty>
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <literal typeName="String">
+        <value>string</value>
+      </literal>
+      <variableRef>
+        <varName>token</varName>
+      </variableRef>
+      <propertyPath>token</propertyPath>
+      <null>string</null>
+    </message>
+    <addToCollection>
+      <!--Optional:-->
+      <comment>string</comment>
+      <variableRef1>
+        <varName>token</varName>
+      </variableRef1>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <paramPropertyPath typeName="String">
+        <propertyPath>token</propertyPath>
+        <!--Optional:-->
+        <entityName>token</entityName>
+      </paramPropertyPath>
+      <propertyPath>token</propertyPath>
+      <!--You have a CHOICE of the next 3 items at this level-->
+      <getProperty>
+        <!--Optional:-->
+        <comment>string</comment>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <propertyPath>token</propertyPath>
+      </getProperty>
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <variableRef>
+        <varName>token</varName>
+      </variableRef>
+    </addToCollection>
+    <removeFromCollection>
+      <!--Optional:-->
+      <comment>string</comment>
+      <variableRef1>
+        <varName>token</varName>
+      </variableRef1>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <paramPropertyPath typeName="String">
+        <propertyPath>token</propertyPath>
+        <!--Optional:-->
+        <entityName>token</entityName>
+      </paramPropertyPath>
+      <propertyPath>token</propertyPath>
+      <!--You have a CHOICE of the next 3 items at this level-->
+      <getProperty>
+        <!--Optional:-->
+        <comment>string</comment>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <!--You have a CHOICE of the next 2 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <propertyPath>token</propertyPath>
+      </getProperty>
+      <clause operator="eq">
+        <!--Optional:-->
+        <comment>string</comment>
+        <!--You have a CHOICE of the next 7 items at this level-->
+        <paramPropertyPath typeName="String">
+          <propertyPath>token</propertyPath>
+          <!--Optional:-->
+          <entityName>token</entityName>
+        </paramPropertyPath>
+        <getProperty>
+          <!--Optional:-->
+          <comment>string</comment>
+          <variableRef>
+            <varName>token</varName>
+          </variableRef>
+          <!--You have a CHOICE of the next 2 items at this level-->
+          <paramPropertyPath typeName="String">
+            <propertyPath>token</propertyPath>
+            <!--Optional:-->
+            <entityName>token</entityName>
+          </paramPropertyPath>
+          <propertyPath>token</propertyPath>
+        </getProperty>
+        <clause/>
+        <literal typeName="String">
+          <value>string</value>
+        </literal>
+        <variableRef>
+          <varName>token</varName>
+        </variableRef>
+        <propertyPath>token</propertyPath>
+        <null>string</null>
+      </clause>
+      <variableRef>
+        <varName>token</varName>
+      </variableRef>
+    </removeFromCollection>
+    <retractBean>
+      <!--Optional:-->
+      <comment>string</comment>
+      <variableRef1>
+        <varName>token</varName>
+      </variableRef1>
+    </retractBean>
+    <clearCollection>
+      <!--Optional:-->
+      <comment>string</comment>
+      <variableRef1>
+        <varName>token</varName>
+      </variableRef1>
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <paramPropertyPath typeName="String">
+        <propertyPath>token</propertyPath>
+        <!--Optional:-->
+        <entityName>token</entityName>
+      </paramPropertyPath>
+      <propertyPath>token</propertyPath>
+    </clearCollection>
+  </behavior>
+</model>
